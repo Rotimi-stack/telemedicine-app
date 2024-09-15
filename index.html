@@ -1,106 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Title of the page -->
-    <title>Basic HTML Template</title>
-
-    <!-- Meta tag for display settings -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Meta tag for character set -->
     <meta charset="UTF-8">
-
-    <!-- Basic styling for better presentation -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        header {
-            background-color: #f2f2f2;
-            padding: 10px;
-            text-align: center;
-        }
-        form {
-            margin: 20px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced CSS Layout</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="bg-image">
     <!-- Header section -->
     <header>
-        <h1 id="heading-one">Welcome to My Basic HTML Page</h1>
+        <div class="logo">
+            <img src="https://images.pexels.com/photos/139398/thermometer-headache-pain-pills-139398.jpeg?cs=srgb&dl=pexels-pixabay-139398.jpg&fm=jpg&_gl=1*1jfpm07*_ga*NTgxMDc5MjY0LjE3MjQ1MDg1NjI.*_ga_8JE65Q40S6*MTcyNjQzNzQzNS42LjEuMTcyNjQzNzQ1My4wLjAuMA../100x50" alt="Logo">
+            <h1>Telemedicine App</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Main heading -->
-    <h2>Introduction</h2>
+    <!-- Main content area -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Additional Info</h2>
+            <input type="search" placeholder="Search...">
+            <ul>
+                <li><a href="#">Appointments</a></li>
+                <li><a href="#">Checkup</a></li>
+                <li><a href="#">Medications</a></li>
+            </ul>
+        </aside>
 
-    <!-- Paragraph -->
-    <p>This is a simple HTML template that includes various elements such as a header, heading, paragraph, form, table, image, and an external link.</p>
+        <!-- Main section -->
+        <main>
+            <section id="home">
+                <h2>Welcome to Our Telemedicine App</h2>
+                <p>This is a comprehensive solution for all your telemedicine needs, offering seamless integration with healthcare providers.</p>
+            </section>
 
-    <!-- Basic registration form -->
-    <h2>Registration Form</h2>
-    <form action="#" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br><br>
+            <section id="services">
+                <h2>Our Services</h2>
+                <p>We offer a variety of telemedicine services including virtual consultations, remote patient monitoring, and more.</p>
+            </section>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+            <section id="about">
+                <h2>About Us</h2>
+                <p>Learn more about our mission, vision, and team dedicated to improving healthcare through technology.</p>
+            </section>
 
-        <label for="phone">Phone Number:</label><br>
-        <input type="tel" id="phone" name="phone"><br><br>
-
-        <input type="submit" value="Register">
-    </form>
-
-    <!-- Table displaying common user information -->
-    <h2>User Information</h2>
-    <table>
-        <tr>
-            <th>Name</th>         
-            <th>Email</th>
-            <th>Phone Number</th>
-        </tr>
-        <tr>
-            <td>Arowolo Victor</td>
-            <td>arowolo96@gmail.com</td>
-            <td>+1-234-567-8900</td>
-        </tr>
-        <tr>
-            <td>Victor Arowolo</td>
-            <td>victorsmith@yahoo.com</td>
-            <td>+1-987-654-3210</td>
-        </tr>
-    </table>
-
-    <!-- Image section 
-    <div class="image-container">
-        <h2>Sample Image</h2>
-        <img src="https://images.pexels.com/photos/6214454/pexels-photo-6214454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" width ="500"     height="300" alt="Sample Image">
+            <section id="contact">
+                <h2>Contact Us</h2>
+                <p>Get in touch with us through our contact form or reach out via email or phone.</p>
+            </section>
+        </main>
     </div>
--->
 
-    <!-- External link to Google -->
-    <p>For more information, visit <a href="https://google.com" target="_blank">Google</a>.</p>
-</div>
-  </body>
-
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Telemedicine App. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" target="_blank">Facebook</a>
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">LinkedIn</a>
+        </div>
+        <p>Contact us at <a href="mailto:info@telemedicineapp.com">info@telemedicineapp.com</a></p>
+    </footer>
+</body>
 </html>
