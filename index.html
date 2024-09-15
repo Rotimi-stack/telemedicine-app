@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Title of the page -->
+    <title>Basic HTML Template</title>
+
+    <!-- Meta tag for display settings -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Meta tag for character set -->
+    <meta charset="UTF-8">
+
+    <!-- Basic styling for better presentation -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+        form {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-image">
+    <!-- Header section -->
+    <header>
+        <h1 id="heading-one">Welcome to My Basic HTML Page</h1>
+    </header>
+
+    <!-- Main heading -->
+    <h2>Introduction</h2>
+
+    <!-- Paragraph -->
+    <p>This is a simple HTML template that includes various elements such as a header, heading, paragraph, form, table, image, and an external link.</p>
+
+    <!-- Basic registration form -->
+    <h2>Registration Form</h2>
+    <form action="#" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone"><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <!-- Table displaying common user information -->
+    <h2>User Information</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+        </tr>
+        <tr>
+            <td>Arowolo Victor</td>
+            <td>arowolo96@gmail.com</td>
+            <td>+1-234-567-8900</td>
+        </tr>
+        <tr>
+            <td>Victor Arowolo</td>
+            <td>victorsmith@yahoo.com</td>
+            <td>+1-987-654-3210</td>
+        </tr>
+    </table>
+
+    <!-- Image section 
+    <div class="image-container">
+        <h2>Sample Image</h2>
+        <img src="https://images.pexels.com/photos/6214454/pexels-photo-6214454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" width ="500"     height="300" alt="Sample Image">
+    </div>
+-->
+    
+    <!-- External link to Google -->
+    <p>For more information, visit <a href="https://google.com" target="_blank">Google</a>.</p>
+</div>
+  </body>
+
+</html>
