@@ -1,187 +1,164 @@
-/* Global styles */
-body {
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-/* Header styling */
 header {
-    background-color: #004aad;
-    color: white;
-    padding: 20px;
+    background:rgba(0, 0, 255, 0.772);
+    color: #fff;
+    padding: 21x;
     text-align: center;
-    border-bottom: 5px solid #00307a;
+     border-bottom: 5px solid #00307a;
     position: fixed;
-    width: 100%;
-    top: 0;
+    position: fixed;
+    top: 0;               
     left: 0;
-    z-index: 1000;
-    display: flex;
+    width: 100%;           
+    z-index: 1000; 
+    display: flex;        
     justify-content: space-between;
     align-items: center;
 }
 
-header .logo {
-    display: flex;
-    align-items: center;    
+header nav ul li a:hover {
+    transform: scale(1.1); 
+    color: darkgray; 
+    cursor: pointer; 
+    transition: transform 0.3s ease, color 0.3s ease;
 }
-
-header .logo img {
-    width: 80px; /* Adjust this value to change the logo size */
-    height: auto;
-    margin-right: 15px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
 nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     justify-content: center;
+    margin: 1rem 0;
 }
 
 nav ul li {
-    margin: 0 15px;
+    margin: 0 1rem;
 }
 
 nav ul li a {
-    color: white;
+    color: #fff;
+    font-size: 14px; 
     text-decoration: none;
-    font-weight: bold;
+    transition: transform 0.3s ease, color 0.3s ease; 
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+    color: darkgray; 
+    cursor: pointer; 
 }
 
-/* Container styling for layout */
-.container {
+
+.social-media-icons {
     display: flex;
-    flex-direction: row;
-    margin-top: 100px; /* space for fixed header */
+    margin-left: 10px;
 }
 
-/* Sidebar styling */
-.sidebar {
-    width: 25%;
-    background-color: #e6e6e6;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar h2 {
-    margin-top: 0;
-}
-
-.sidebar input[type="search"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar ul li {
-    margin: 10px 0;
-}
-
-.sidebar ul li a {
-    color: #004aad;
-    text-decoration: none;
-}
-
-.sidebar ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Main content styling */
-main {
-    flex: 1;
-    padding: 20px;
-}
-
-main section {
-    margin-bottom: 40px;
-}
-
-main h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-main p {
-    font-size: 1rem;
-}
-
-/* Footer styling */
-footer {
-    background-color: #004aad;
+.social-media-icons a {
     color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-footer .social-links {
-    margin: 10px 0;
-}
-
-footer .social-links a {
-    color: white;
+    margin-right: 15px;
+    font-size: 1.2rem;
     text-decoration: none;
-    margin: 0 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
-footer .social-links a:hover {
-    text-decoration: underline;
+.social-media-icons a:hover {
+    transform: scale(1.5); 
+    color: darkgray; 
+    cursor: pointer; 
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        box-shadow: none;
-        margin-bottom: 20px;
-    }
+.social-media-icons h2 {
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    font-family: 'Open Sans', sans-serif; 
+    font-style: italic; 
+    color: White; 
+    left: 85%;
+    margin-top: 1rem;
+    text-align: left;
     
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav ul li {
-        margin: 5px 0;
-    }
 }
 
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.2rem;
-    }
-
-    main h2 {
-        font-size: 1.5rem;
-    }
+.social-media-icons h2:hover {
+    animation: shake 0.5s forwards; 
 }
+
+
+
+
+/******************************** Styling for the image header section ************************************/
+/* Section for the Image Carousel */
+.section-image {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: 0rem;
+    padding: 0;
+}
+
+/* Carousel Image */
+.image-header-img {
+    width: 100%;
+    height: 800px;
+    display: block;
+    object-fit: cover; 
+}
+
+/* Carousel Inner Container */
+.carousel-inner {
+    position: relative;
+}
+
+/* Carousel Items */
+.carousel-item {
+    position: relative;
+}
+
+/* Carousel Captions */
+.carousel-caption {
+    position: absolute;
+    left: 10%;
+    top: 30%; /* Changed from bottom to top */
+    z-index: 10;
+    color: black;
+    text-align: left;
+    margin-left: -3.5rem;
+}
+
+.carousel-caption a.btn {
+    background-color: rgb(15, 15, 213); /* Button background color */
+    color: white; /* Button text color */
+    margin-bottom: 1rem; /* Space below the button */
+    padding: 0.75rem 1.5rem; /* Button padding */
+    font-size: 1.25rem; /* Button font size */
+}
+
+.carousel-caption h2 {
+    font-size: 2.5rem; /* Heading font size */
+    font-weight: bold; /* Bold text */
+    color: white; /* Set heading color */
+}
+
+.carousel-caption p {
+    font-size: 1rem; /* Paragraph font size */
+    color: white; /* Set paragraph color */
+    font-weight: bold;
+}
+
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 10; /* Ensures controls are above carousel items */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(255, 255, 255, 0.5); /* Optional: Background color for visibility */
+    border-radius: 50%; /* Optional: Rounded controls */
+}
+
+.carousel-caption a.btn:hover {
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+}
+
+
+

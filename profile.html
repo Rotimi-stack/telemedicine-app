@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemedicine</title>
+    <link rel="stylesheet" href="profile-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Header section -->
+    <header>
+        <!-- Social Media Icons Container -->
+        <div class="media-icons">
+            <h2><a href="index" id="homeLink">Telemedicine</a></h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about">About Us</a></li>
+
+                <li><a href="profile">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-------------------------------------- Profile Section ----------------------------------------->
+
+    <div class="header-h2">
+        <h2 class="patient-heading">Patient Profile</h2> <!-- Heading moved outside the container -->
+    </div>
+    <div class="container">
+        <div class="profile-container">
+            <form id="profileForm" method="POST" action="/update-profile">
+                <div class="form-group">
+                    <label for="id">Id:</label>
+                    <input type="text" id="id" name="id" value="12345" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" value="John" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" value="Doe" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" value="(123) 456-7890" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dateOfBirth" value="1985-06-15" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" disabled>
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" value="123 Elm St, Springfield" readonly>
+                </div>
+
+                <!-- Edit, Save, and Delete Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn edit-btn" onclick="enableEdit()">Edit</button>
+                    <button type="submit" id="saveButton" class="btn save-btn" disabled>Save</button>
+                    <button type="button" class="btn delete-btn" onclick="deleteAccount()">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="profile.js"></script>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Telemedicine App. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" target="_blank">Facebook</a>
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">LinkedIn</a>
+        </div>
+        <p>Contact us at <a href="mailto:info@telemedicineapp.com">info@telemedicineapp.com</a></p>
+    </footer>
+
+
+    <script src="profile.js"></script>
+</body>
+
+</html>

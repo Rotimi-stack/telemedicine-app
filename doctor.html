@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemedicine</title>
+    <link rel="stylesheet" href="doctor-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+
+<body>
+    <!-- Header section -->
+    <header>
+        <!-- Social Media Icons Container -->
+        <div class="doc-media-icons">
+            <h2><a href="index.html" id="homeLink">Telemedicine</a></h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="patient">Patient</a></li>
+                <li><a href="appointment">Appointment</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-------------------------------------- Doctor Header Section with Bootstrap ----------------------------------------->
+
+    <section class="doctor container my-4">
+            <div class="doctor-h2">
+                <h3 class="doctor-heading">Doctor List</h3> <!-- Only one h2 -->
+            </div>
+
+        <!-- Search and Filter Options -->
+        <div class="search-filter mb-3">
+            <input type="text" id="searchDoctor" class="form-control" placeholder="Search by name..."
+                onkeyup="filterDoctorTable()">
+        </div>
+
+        <!-- Doctor Table -->
+        <table id="doctorTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Schedule</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Doctor rows will be populated here -->
+            </tbody>
+        </table>
+
+        <!-- Section to add a new doctor -->
+        <div class="mt-4">
+            <h3>Add New Doctor</h3>
+            <form id="addDoctorForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="specialization" class="form-label">Specialization:</label>
+                    <input type="text" id="specialization" name="specialization" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="schedule" class="form-label">Schedule:</label>
+                    <textarea id="schedule" name="schedule" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Doctor</button>
+            </form>
+        </div>
+
+        <!--Edit Doctor Details-->
+        <div id="editDoctorModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <form id="editDoctorForm">
+                    <input type="hidden" id="doctorId" name="doctorId">
+
+                    <label for="editFirstName">First Name:</label>
+                    <input type="text" id="editFirstName" name="firstName" required>
+
+                    <label for="editLastName">Last Name:</label>
+                    <input type="text" id="editLastName" name="lastName" required>
+
+                    <label for="editSpecialization">Specialization:</label>
+                    <input type="text" id="editSpecialization" name="specialization" required>
+
+                    <label for="editEmail">Email:</label>
+                    <input type="email" id="editEmail" name="email" required>
+
+                    <label for="editPhone">Phone:</label>
+                    <input type="text" id="editPhone" name="phone" required>
+
+                    <label for="editSchedule">Schedule:</label>
+                    <input type="text" id="editSchedule" name="schedule" required>
+
+                    <button type="submit">Update Doctor</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- BOOK APPOINTMENT -->
+        <div id="bookingModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeBookingModal">&times;</span>
+                <h2>Book Appointment</h2>
+                <form id="bookingForm">
+                    <label for="patientId">Patient ID:</label>
+                    <input type="text" id="patientId" name="patientId" readonly> <!-- Hidden field for patient ID -->
+
+                    <label for="doctorId">Doctor ID:</label>
+                    <input type="text" id="doctorId" name="doctorId" readonly> <!-- Read-only field for doctor ID -->
+
+                    <label for="appointmentDate">Appointment Date:</label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" required>
+
+                    <label for="appointmentTime">Appointment Time:</label>
+                    <input type="time" id="appointmentTime" name="appointmentTime" required>
+
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="completed">Completed</option>
+                        <option value="canceled">Canceled</option>
+                    </select>
+
+                    <button id="createAppointmentButton" type="button">Create Appointment</button>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4">
+        <p>&copy; 2024 Telemedicine App. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" target="_blank">Facebook</a>
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">LinkedIn</a>
+        </div>
+        <p>Contact us at <a href="mailto:info@telemedicineapp.com">info@telemedicineapp.com</a></p>
+    </footer>
+    <script src="doctor.js"></script> <!-- Link to external JavaScript file -->
+</body>
+
+</html>

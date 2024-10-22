@@ -1,0 +1,189 @@
+header {
+    background: rgba(0, 0, 255, 0.772);
+    color: #fff;
+    padding: 5px; /* Adjust this value for desired spacing */
+    text-align: center;
+    border-bottom: 5px solid #00307a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.patient-h2 {
+    display: block; /* or display: flex; */
+    justify-content: center;
+    width: 20%;
+    max-width: 500px;
+    text-align: center;
+    background-color: #a2d0f8;
+    padding: 0px;
+    border-radius: 5px;
+    margin: 50px auto 20px auto; /* Center horizontally */
+    height: 70px;
+    margin-bottom: 23px;
+
+
+
+}
+
+.patient-heading {
+    font-size: 34px;
+    margin: 0;
+    color: black;
+    line-height: 1.8; 
+}
+
+  
+
+.patient-h2:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+
+.search-filter {
+    margin-bottom: 20px; /* Space below the filter div */
+}
+
+.table {
+    margin-top: 20px; /* Space above the table */
+    width: 100%; /* Ensure the table takes full width */
+    border-collapse: collapse; /* Optional: for better table appearance */
+}
+
+.table th, .table td {
+    padding: 10px; /* Add padding inside table cells */
+    border: 1px solid #ddd; /* Optional: adds border around table cells */
+}
+
+.table th {
+    background-color: #f2f2f2; /* Optional: background color for header */
+}
+
+
+header nav ul li a:hover {
+    transform: scale(1.1); 
+    color: darkgray; 
+    cursor: pointer; 
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    font-size: 14px; 
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+nav ul li a:hover {
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+
+.media-icons {
+    display: flex;
+    margin-left: 10px;
+}
+
+.media-icons a {
+    color: white;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.media-icons a:hover {
+    transform: scale(1.5); 
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+.media-icons h2 {
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    font-family: 'Open Sans', sans-serif; 
+    font-style: italic; 
+    color: White; 
+    left: 85%;
+    margin-top: 1rem;
+    text-align: left;
+    
+}
+
+.media-icons h2:hover {
+    animation: shake 0.5s forwards; 
+}
+
+.patient {
+    margin-top: 30px; /* Space below the header, adjust as needed */
+    padding: 20px; /* Padding for better layout */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners for the section */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Centering the section title */
+.patient h2 {
+    text-align: center; /* Center the title */
+    margin-top: 50px; /* Space below the title */
+}
+
+.search-filter input,
+.search-filter select {
+    width: 100%; /* Full width for input and select */
+    padding: 10px; /* Padding inside the fields */
+    margin-bottom: 15px; /* Space below each input field */
+    box-sizing: border-box; /* Ensure padding does not affect width */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f0f0f0; /* Light grey background */
+    color: #333; /* Text color */
+}
+
+.table {
+    margin-top: 20px; /* Space above the table */
+    width: 100%; /* Ensure the table takes full width */
+    border-collapse: collapse; /* Optional: for better table appearance */
+}
+
+.table th, .table td {
+    padding: 10px; /* Add padding inside table cells */
+    border: 1px solid #ddd; /* Optional: adds border around table cells */
+}
+
+.table th {
+    background-color: #f2f2f2; /* Optional: background color for header */
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Highlight row on hover */
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-2px, 0); }
+    50% { transform: translate(2px, 0); }
+    75% { transform: translate(-2px, 0); }
+    100% { transform: translate(0); }
+}
+
+
+

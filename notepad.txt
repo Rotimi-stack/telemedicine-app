@@ -1,0 +1,1166 @@
+building a Fullstack application
+
+1)Prepare your Database
+
+2)do npm -init y in the terminal
+
+3)Create The Server.js  ----This is to execute code from the server
+
+4)Test the server configuration: node server.js in the terminal
+then run this http://localhost:3000/index   to test
+
+5)You need to serve your static assets (like CSS files) in your server setup. 
+To achieve this, you can use the built-in express.static middleware in Express to serve static files such as CSS, JavaScript, and images.
+To do this *INSTALL EXPRESS.JS* in the terminal
+
+6)Set Up Database Connection database.js 
+then 
+npm install mysql2
+
+7)install npm install express-session
+the authentication check using sessions
+Session Middleware: The Express application uses express-session middleware to manage user sessions. 
+When a user logs in successfully, their patient ID is stored in the session:
+
+8)npm install cors
+
+
+
+
+
+
+
+
+
+------------------------------------------------IN ORDER OF INSTALLING----------------------------
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> npm init -y
+Wrote to C:\Users\arowo\PlpAcademy-Telemedicine-App\package.json:
+
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "Learn HTML, CSS and MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server"
+  },
+  "author": "",
+  "keywords": []
+
+
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+server running on port :3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+server running on port :3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> npm install express
+
+
+  run `npm fund` for details
+found 0 vulnerabilities
+Server is running on http://localhost:3000
+Server running on port 3000
+Server running on port 3000
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+C:\Users\arowo\PlpAcademy-Telemedicine-App\server.js:117
+});
+ ^
+
+SyntaxError: Unexpected token ')'
+    at wrapSafe (node:internal/modules/cjs/loader:1281:20)
+    at Module._compile (node:internal/modules/cjs/loader:1321:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at node:internal/main/run_main_module:28:49
+Node.js v20.14.0
+Server running on port 3000
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.ja
+node:internal/modules/cjs/loader:1148
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\arowo\PlpAcademy-Telemedicine-App\server.ja'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1145:15)
+    at Module._load (node:internal/modules/cjs/loader:986:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)
+  code: 'MODULE_NOT_FOUND',
+}
+Node.js v20.14.0
+Server running on port 3000
+Server running on port 3000
+Server running on port 3000
+Server running on port 3000
+Server running on port 3000
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> npm install mysql2
+
+
+14 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+C:\Users\arowo\PlpAcademy-Telemedicine-App\server.js:226
+const app = express();
+            ^
+
+ReferenceError: express is not defined
+    at Object.<anonymous> (C:\Users\arowo\PlpAcademy-Telemedicine-App\server.js:226:13)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)
+    at node:internal/main/run_main_module:28:49
+
+Node.js v20.14.0
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+An Error Occured: Error: Access denied for user 'newuser'@'localhost' to database 'telemedicine'
+    at Packet.asError (C:\Users\arowo\PlpAcademy-Telemedicine-App\node_modules\mysql2\lib\packets\packet.js:738:17)
+    at ClientHandshake.execute (C:\Users\arowo\PlpAcademy-Telemedicine-App\node_modules\mysql2\lib\commands\command.js:29:26)
+    at Connection.handlePacket (C:\Users\arowo\PlpAcademy-Telemedicine-App\node_modules\mysql2\lib\connection.js:481:34)
+    at PacketParser.onPacket (C:\Users\arowo\PlpAcademy-Telemedicine-App\node_modules\mysql2\lib\connection.js:97:12)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at Readable.push (node:internal/streams/readable:390:5)
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> mysql -u root -p -e "CREATE USER 'medicineUser'@'localhost' IDENTIFIED BY 'medicinePassword';"
+Enter password: ************
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> mysql -u root -p -e "GRANT ALL PRIVILEGES ON telemedicine.* TO 'medicineUser'@'localhost';"   
+Enter password: ************
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'arowolo96@gmail.com', loginpassword: 'lambogini' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Request Body: { loginemail: 'tolu@gmail.com', loginpassword: 'toluwalayo' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    phone: '07032482753',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    phone: '07032482753',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    phone: '07032482753',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    phone: '07032482753',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    phone: '07032482753',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+  }
+]
+Fetched profile data: [
+  {
+    id: 2,
+    first_name: 'Margret',
+    last_name: 'Adebanwo',
+    date_of_birth: 2024-10-13T23:00:00.000Z,
+    gender: 'Female',
+    address: 'No 7/8 Alamu Elegbede Crescent, Gra Scheme 1 oko-oba agege'
+]
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'tolu@gmail.com', loginpassword: 'toluwalayo' }
+Request Body: { loginemail: 'tolu@gmail.com', loginpassword: 'lambogini' }
+PS C:\Users\arowo\PlpAcademy-Telemedicine-App> node server.js
+Server running on port 3000
+DB Connected!
+Request Body: { loginemail: 'tolu@gmail.com', loginpassword: 'toluwalayo' }
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]
+Fetched doctors data: [
+  {
+    id: 1,
+    first_name: 'Abigail Oluwasanmi',
+    last_name: 'Fashola',
+    specialization: 'General Practioner',
+    email: 'sanmi@gmail.com',
+    phone: '07032482753',
+    schedule: 'Available'
+  },
+  {
+    id: 2,
+    first_name: 'Toyin',
+    last_name: 'Fashanu',
+    specialization: 'Dentist',
+    email: 'toyin@gmail.com',
+    phone: '07032482753',
+    schedule: 'Availabole From November'
+  },
+  {
+    id: 3,
+    first_name: 'Segun',
+    last_name: 'Adebanwo',
+    specialization: 'General Practioner',
+    email: 'segun@gmail.com',
+    phone: '07032482753',
+    schedule: 'BUZY'
+  },
+  {
+    id: 4,
+    first_name: 'Lanre',
+    last_name: 'Arowolo',
+    specialization: 'Dentist',
+    email: 'lanre@gmail.com',
+    phone: '07032482753',
+    schedule: 'Very Buzy'
+  }
+]

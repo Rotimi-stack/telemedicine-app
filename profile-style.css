@@ -1,0 +1,199 @@
+header {
+    background: rgba(0, 0, 255, 0.772);
+    color: #fff;
+    padding: 5px; /* Adjust this value for desired spacing */
+    text-align: center;
+    border-bottom: 5px solid #00307a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-h2 {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center the div horizontally */
+    align-items: center; /* Center the div vertically if necessary */
+    width: 20%;
+    max-width: 500px;
+    text-align: center; /* Center the heading text */
+    background-color: #1db392; 
+    padding: 2px 5px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    margin: 90px auto 0;
+    transition: transform 0.2s ease;
+    
+}
+
+.header-h2:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+
+.patient-heading {
+    font-size: 34px; 
+    margin: 0; 
+    color: black; 
+}
+
+.container {
+    margin-top: 70px; /* Adjust this value as needed for space below the header */
+    padding: 20px; /* Optional: Add padding for better layout */
+    display: flex; /* Center the profile-container */
+    justify-content: center;
+}
+
+header nav ul li a:hover {
+    transform: scale(1.1); 
+    color: darkgray; 
+    cursor: pointer; 
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    font-size: 14px; 
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+nav ul li a:hover {
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+
+.media-icons {
+    display: flex;
+    margin-left: 10px;
+}
+
+.media-icons a {
+    color: white;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.media-icons a:hover {
+    transform: scale(1.5); 
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+.media-icons h2 {
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    font-family: 'Open Sans', sans-serif; 
+    font-style: italic; 
+    color: White; 
+    left: 85%;
+    margin-top: 1rem;
+    text-align: left;
+    
+}
+
+.media-icons h2:hover {
+    animation: shake 0.5s forwards; 
+}
+/* Styling for the Patient Profile heading */
+
+
+.profile-container {
+    background: rgba(2, 2, 113, 0.772);
+    padding: 20px; /* Padding inside the container */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    width: 800px; /* Width of the profile container */
+    margin-top: -65px;
+    transition: transform 0.3s ease;
+}
+
+/* Shake on hover */
+.profile-container:hover {
+    animation: shake 0.5s ease-in-out; /* Apply shake animation */
+}
+
+
+
+/* General styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    color: #fff;                   
+    font-weight: bold;   
+}
+
+
+input, select, textarea {
+    width: 100%; /* Full width */
+    padding: 8px; /* Padding for inputs */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #4a4a4a; /* Grey background */
+    color: white; /* White text color */
+}
+
+/* Button group styling */
+.button-group {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-group .btn.edit-btn {
+    background-color: orange;
+    color: white;
+}
+
+.button-group .btn.save-btn {
+    background-color: green;
+    color: white;
+}
+
+.button-group .btn.delete-btn {
+    background-color: red;
+    color: white;
+}
+
+
+/* Footer styling */
+footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-2px, 0); }
+    50% { transform: translate(2px, 0); }
+    75% { transform: translate(-2px, 0); }
+    100% { transform: translate(0); }
+}
