@@ -20,6 +20,28 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error saving profile:', error));
     };
 });
+function redirectToTelemedicine() {
+    // Fetch the user session to determine the role
+    fetch('/check-session')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.role === 'admin') {
+                window.location.href = 'admin'; // Redirect to admin.html
+            } else {
+                window.location.href = 'index'; // Redirect to index.html
+            }
+        })
+        .catch(error => {
+            console.error('Error checking session:', error);
+            // Optionally redirect to a generic page or show an error message
+        });
+}
+
 
 // Function to fetch and display the patient's profile data
 function fetchProfileData() {

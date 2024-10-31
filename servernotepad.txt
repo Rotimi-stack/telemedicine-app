@@ -44,17 +44,7 @@ app.use(session({
 
 
 
-// Check user session
-app.get('/check-session', (req, res) => {
-    // Check if the user is logged in
-    if (req.session.adminId) {
-        return res.json({ role: 'admin' }); // User is an admin
-    } else if (req.session.patientId) {
-        return res.json({ role: 'patient' }); // User is a patient
-    } else {
-        return res.status(401).json({ message: 'Unauthorized' }); // User not logged in
-    }
-});
+
 
 // Body parser middleware to parse form data from POST requests
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -75,27 +65,6 @@ app.get('/index', (req, res) => {
         }
     });
 });
-
-
-
-// Serve the admin.html page 
-app.get('/admin', (req, res) => {
-    // Check if the user is logged in as an admin
-    if (!req.session.adminId) {
-        // If not, return a 401 Unauthorized status
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
-    const filePath = path.join(__dirname, 'admin.html');
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.status(500).send('Error loading admin.html');
-        } else {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data); // Send admin.html content
-        }
-    });
-});
-
 
 
 
@@ -138,6 +107,7 @@ app.post('/register', (req, res) => {
 });
 
 
+
 //-----------------------------------------------------Serve login.html page------------------------------------
 app.get('/login', (req, res) => {
 
@@ -152,51 +122,25 @@ app.get('/login', (req, res) => {
     });
 });
 
+// Handle login form submission (POST request)
 app.post('/login', (req, res) => {
     console.log('Request Body:', req.body);
     const { loginemail, loginpassword } = req.body;
 
-    // Define SQL queries for patients and admin
-    const patientQuery = `SELECT id FROM patients WHERE email = ?`;
-    const adminQuery = `SELECT id, role FROM admin WHERE username = ?`;
-
-    // Check if user exists in the patients table
-    db.query(patientQuery, [loginemail], (err, patientRows) => {
-        if (err) {
-            console.error('Error querying patients:', err);
-            return res.status(500).json({ success: false, message: 'An error occurred. Please try again.' });
+    // First, find the user by email
+    const sql = `SELECT id, password_hash FROM patients WHERE email = ?`;
+    db.query(sql, [loginemail], (err, rows) => {
+        if (err || rows.length === 0) {
+            return res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
 
-        if (patientRows.length > 0) {
-            // Patient found, redirect to index
-            const patient = patientRows[0];
-            req.session.patientId = patient.id;
-            return res.json({ success: true, patientId: patient.id, redirect: '/index' });
-        }
+        const patient = rows[0];
 
-        // If not found in patients, check in the admin table
-        db.query(adminQuery, [loginemail], (err, adminRows) => {
-            if (err) {
-                console.error('Error querying admin:', err);
-                return res.status(500).json({ success: false, message: 'An error occurred. Please try again.' });
-            }
 
-            if (adminRows.length === 0) {
-                // No user found in either table
-                return res.status(401).json({ success: false, message: 'Invalid email or password' });
-            }
-
-            // User found in admin table, check role
-            const admin = adminRows[0];
-            req.session.adminId = admin.id;
-
-            if (admin.role === 'admin') {
-                // If the role is admin, redirect to Patient.html
-                return res.json({ success: true, adminId: admin.id, redirect: '/admin.html' });
-            } else {
-                return res.status(403).json({ success: false, message: 'Access restricted to admins.' });
-            }
-        });
+        // If the login is successful, store patient ID in the session
+        req.session.patientId = patient.id;
+        // Send JSON response indicating success
+        res.json({ success: true, patientId: patient.id });
     });
 });
 
@@ -278,7 +222,7 @@ app.post('/update-profile', (req, res) => {
 
 //-----------------------------------------------------------Serve patient.html page--------------------------------------
 app.get('/patient', (req, res) => {
-    if (!req.session.patientId && !req.session.adminId) {  // Check for either patientId or adminId
+    if (!req.session.patientId) {
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
 
@@ -320,30 +264,19 @@ app.get('/fetch-patients', (req, res) => {
 // Endpoint to add a new doctor-------------------------------------DOCTOR-----------------------------------------
 // Serve doctor.html page
 app.get('/doctor', (req, res) => {
-    if (!req.session.patientId && !req.session.adminId) {
+    if (!req.session.patientId) {
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
-
-    // Determine user type based on session ID
-    const userType = req.session.adminId ? 'admin' : 'patient';
-
     const filePath = path.join(__dirname, 'doctor.html');
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(filePath, (err, data) => {
         if (err) {
-            return res.status(500).send('Error loading doctor.html');
+            res.status(500).send('Error loading doctor.html');
+        } else {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(data); // Serve the doctor page
         }
-
-        // Inject the userType variable into the HTML
-        const modifiedData = data.replace(
-            '</head>',
-            `<script>var userType = "${userType}";</script></head>`
-        );
-
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(modifiedData); // Serve the modified HTML with userType injected
     });
 });
-
 
 //Add Doctor
 app.post('/add-doctor', (req, res) => {
@@ -429,7 +362,7 @@ app.put('/update-doctor/:id', (req, res) => {
 
 // ----------------------------------------------------Serve appointment.html page----------------------------
 app.get('/appointment', (req, res) => {
-    if (!req.session.patientId && !req.session.adminId) {  // Check for either patientId or adminId
+    if (!req.session.patientId) {
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
     const filePath = path.join(__dirname, 'appointment.html');
@@ -445,75 +378,30 @@ app.get('/appointment', (req, res) => {
 
 // Fetch all appointments
 app.get('/fetch-appointments', (req, res) => {
-    console.log('Patient ID:', req.session.patientId);
-    console.log('Admin ID:', req.session.adminId);
-
-    const userId = req.session.patientId || req.session.adminId;
-
-    // Check if the user is a patient or an admin
-    if (req.session.patientId) {
-        // Fetch appointments for the patient with id
-        const query = `
-        SELECT 
-            appointments.id, 
-            appointments.patient_id, 
-            patients.first_name AS patient_firstname,
-            patients.last_name AS patient_lastname,
-            appointments.doctor_id,
-            doctors.first_name AS doctor_firstname, 
-            doctors.last_name AS doctor_lastname, 
-            appointments.appointment_date, 
-            appointments.appointment_time,
-            appointments.status
-        FROM 
-            appointments
-        JOIN 
-            patients ON appointments.patient_id = patients.id
-        JOIN 
-            doctors ON appointments.doctor_id = doctors.id
-        WHERE 
-            appointments.patient_id = ?`;
-            
-        db.query(query, [userId], (err, results) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ success: false, message: 'Database error' });
-            }
-            res.json(results);
-        });
-    } else if (req.session.adminId) {
-        // Fetch all appointments for admin
-        const sql = `SELECT 
-            appointments.id, 
-            appointments.patient_id, 
-            patients.first_name AS patient_firstname,
-            patients.last_name AS patient_lastname,
-            appointments.doctor_id,
-            doctors.first_name AS doctor_firstname, 
-            doctors.last_name AS doctor_lastname, 
-            appointments.appointment_date, 
-            appointments.appointment_time,
-            appointments.status
+    const sql = `SELECT 
+    appointments.id, 
+    appointments.patient_id, 
+    patients.first_name AS patient_firstname,
+    patients.last_name AS patient_lastname,
+    appointments.doctor_id,
+    doctors.first_name AS doctor_firstname, 
+    doctors.last_name AS doctor_lastname, 
+    appointments.appointment_date, 
+    appointments.appointment_time,appointments.status
             FROM 
                 appointments
             JOIN 
                 patients ON appointments.patient_id = patients.id
             JOIN 
                 doctors ON appointments.doctor_id = doctors.id;`;
-
-        db.query(sql, (err, results) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ success: false, message: 'Database error' });
-            }
-            res.json(results);
-        });
-    } else {
-        // If no user is authenticated
-        res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        res.json(results);
+    });
 });
-
 
 
 // Fetch specific appointment by ID

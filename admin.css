@@ -1,0 +1,158 @@
+header {
+    background:rgba(0, 0, 255, 0.772);
+    color: #fff;
+    padding: 21x;
+    text-align: center;
+     border-bottom: 5px solid #00307a;
+    position: fixed;
+    position: fixed;
+    top: 0;               
+    left: 0;
+    width: 100%;           
+    z-index: 1000; 
+    display: flex;        
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul li a:hover {
+    transform: scale(1.1); 
+    color: darkgray; 
+    cursor: pointer; 
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    font-size: 14px; 
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+nav ul li a:hover {
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+
+.social-media-icons {
+    display: flex;
+    margin-left: 10px;
+}
+
+.social-media-icons a {
+    color: white;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-media-icons a:hover {
+    transform: scale(1.5); 
+    color: darkgray; 
+    cursor: pointer; 
+}
+
+.social-media-icons h2 {
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    font-family: 'Open Sans', sans-serif; 
+    font-style: italic; 
+    color: White; 
+    left: 85%;
+    margin-top: 1rem;
+    text-align: left;
+    
+}
+
+.social-media-icons h2:hover {
+    animation: shake 0.5s forwards; 
+}
+.section-image {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: 0rem;
+    padding: 0;
+}
+
+/* Carousel Image */
+.image-header-img {
+    width: 100%;
+    height: 800px;
+    display: block;
+    object-fit: cover; 
+}
+
+/* Carousel Inner Container */
+.carousel-inner {
+    position: relative;
+}
+
+/* Carousel Items */
+.carousel-item {
+    position: relative;
+}
+
+/* Carousel Captions */
+.carousel-caption {
+    position: absolute;
+    left: 10%;
+    top: 30%; /* Changed from bottom to top */
+    z-index: 10;
+    color: black;
+    text-align: left;
+    margin-left: -3.5rem;
+}
+
+.carousel-caption a.btn {
+    background-color: rgb(15, 15, 213); /* Button background color */
+    color: white; /* Button text color */
+    margin-bottom: 1rem; /* Space below the button */
+    padding: 0.75rem 1.5rem; /* Button padding */
+    font-size: 1.25rem; /* Button font size */
+}
+
+.carousel-caption h2 {
+    font-size: 2.5rem; /* Heading font size */
+    font-weight: bold; /* Bold text */
+    color: white; /* Set heading color */
+}
+
+.carousel-caption p {
+    font-size: 1rem; /* Paragraph font size */
+    color: white; /* Set paragraph color */
+    font-weight: bold;
+}
+
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 10; /* Ensures controls are above carousel items */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(255, 255, 255, 0.5); /* Optional: Background color for visibility */
+    border-radius: 50%; /* Optional: Rounded controls */
+}
+
+.carousel-caption a.btn:hover {
+    animation: shake 0.5s forwards; /* Shake effect on hover */
+}
+
+
+

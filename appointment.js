@@ -9,15 +9,15 @@ function filterAppointmentTable() {
     // Loop through table rows (excluding header row) to filter based on input and status
     for (let i = 1; i < rows.length; i++) { // Start at 1 to skip header row
         const row = rows[i];
-        const patientId = row.cells[1].textContent.trim(); // Trim to remove any extra spaces
-        const doctorId = row.cells[2].textContent.trim(); // Trim to remove any extra spaces
+        const patientName = row.cells[1].textContent.trim().toLowerCase(); // Trim to remove any extra spaces
+        const doctorName = row.cells[2].textContent.trim().toLowerCase(); // Trim to remove any extra spaces
         const appointmentStatus = row.cells[5].textContent.toLowerCase(); // Convert status to lowercase
 
         // Convert searchInput to a string for comparison
         const searchStr = searchInput.trim();
 
         // Check if the row matches the search input and status filter criteria
-        const matchesSearch = patientId.includes(searchStr) || doctorId.includes(searchStr);
+        const matchesSearch = patientName.includes(searchStr) || doctorName.includes(searchStr);
         const matchesStatus = statusFilter === '' || appointmentStatus === statusFilter; // Use lowercase comparison
 
         // Show or hide the row based on filters
@@ -30,6 +30,27 @@ function filterAppointmentTable() {
 }
 
 
+function redirectToTelemedicine() {
+    // Fetch the user session to determine the role
+    fetch('/check-session')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.role === 'admin') {
+                window.location.href = 'admin'; // Redirect to admin.html
+            } else {
+                window.location.href = 'index'; // Redirect to index.html
+            }
+        })
+        .catch(error => {
+            console.error('Error checking session:', error);
+            // Optionally redirect to a generic page or show an error message
+        });
+}
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -91,8 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         // Add a "Cancel" button
+                        
                         const cancelCell = row.insertCell(7);
                         const cancelButton = document.createElement('button');
+                        cancelButton.className = 'cancel-btn';
                         cancelButton.innerText = 'Cancel';
                         cancelButton.onclick = () => cancelAppointment(appointment);
                         cancelCell.appendChild(cancelButton);

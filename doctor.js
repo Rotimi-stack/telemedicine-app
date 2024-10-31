@@ -23,7 +23,52 @@ function filterDoctorTable() {
     }
 }
 
+function redirectToTelemedicine() {
+    // Fetch the user session to determine the role
+    fetch('/check-session')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.role === 'admin') {
+                window.location.href = 'admin'; // Redirect to admin.html
+            } else {
+                window.location.href = 'index'; // Redirect to index.html
+            }
+        })
+        .catch(error => {
+            console.error('Error checking session:', error);
+            // Optionally redirect to a generic page or show an error message
+        });
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
+    // Directly use the injected userType variable
+    const userType = window.userType;
+
+    function toggleVisibilityBasedOnUserType() {
+        console.log("User Type:", userType);
+
+        const addDoctorSection = document.getElementById('addDoctorSection');
+
+        if (userType === 'admin') {
+            // Show the entire add doctor section for admin
+            addDoctorSection.style.display = 'block';
+        } else if (userType === 'patient') {
+            // Hide the entire add doctor section for patients
+            addDoctorSection.style.display = 'none';
+        }
+
+    }
+
+    toggleVisibilityBasedOnUserType();
+
+
+
     // Fetch doctor data via AJAX request
     fetchDoctorData();
 
@@ -61,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // Function to fetch and display doctors in the table
+    // Function to fetch and display doctors in the table
     function fetchDoctorData() {
         fetch('/fetch-doctors') // Call the API endpoint
             .then(response => {
@@ -82,9 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.insertCell(5).innerText = doctor.phone;
                     row.insertCell(6).innerText = doctor.schedule;
 
-
-
-                    // Add the "Edit" button in the last cell
+                    // Add "Edit" button for admins only
+                    const editCell = row.insertCell(7);
                     const editButton = document.createElement('button');
                     editButton.className = 'edit-btn';
                     editButton.innerText = 'Edit';
@@ -100,18 +145,22 @@ document.addEventListener("DOMContentLoaded", function () {
                         openEditModal(doctor); // Open modal with populated data
                     };
 
-                    row.insertCell(7).appendChild(editButton);
+                    // Conditionally display Edit button based on userType
+                    if (userType === 'admin') {
+                        editCell.appendChild(editButton);
+                    }
 
-
-                    // Adding Book Session Button
+                    // Add "Book Session" button for patients only
                     const bookCell = row.insertCell(8); // New cell for Book Session button
                     const bookButton = document.createElement('button');
+                    bookButton.className = 'book-session-btn';
                     bookButton.innerText = 'Book Session';
                     bookButton.onclick = () => openBookSessionModal(doctor); // Function to open the booking modal
-                    bookCell.appendChild(bookButton);
 
-
-
+                    // Conditionally display Book Session button based on userType
+                    if (userType === 'patient') {
+                        bookCell.appendChild(bookButton);
+                    }
                 });
             })
             .catch(error => console.error('Error fetching doctors:', error));

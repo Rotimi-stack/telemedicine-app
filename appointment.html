@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,96 +16,94 @@
 
 
 <body>
-    <!-- Header section -->
-    <header>
-        <!-- Social Media Icons Container -->
-        <div class="media-icons">
+    <div class="container">
+        <!-- Header section -->
+        <header>
+            <!-- Social Media Icons Container -->
+            <div class="media-icons">
+                <h2><a href="javascript:void(0);" id="homeLink" onclick="redirectToTelemedicine()">Telemedicine</a></h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="javascript:void(0);" onclick="redirectToTelemedicine()">Telemedicine</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
 
-            <h2><a href="index" id="homeLink">Telemedicine</a></h2>
-
-        </div>
-        <nav>
-            <ul>
-                <li><a href="patient">Patient</a></li>
-                <li><a href="doctor">Doctor</a></li>
-                <li><a href="contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-------------------------------------- Appointment Header Section----------------------------------------->
+        <!-------------------------------------- Appointment Header Section----------------------------------------->
 
 
-    <!-- Appointment Section -->
-    <section class="appointment container my-4">
-       
-        <div class="appointment-h2">
-            <h3 class="appointment-heading">Appointment List</h3> <!-- Only one h2 -->
-        </div>
-        <!-- Search and Filter Options -->
-        <div class="search-filter mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by Patient or Doctor ID" onkeyup="filterAppointmentTable()">
-            <select id="appointmentFilter" class="form-select mt-2" onchange="filterAppointmentTable()">
-                <option value="">All Status</option>
-                <option value="Scheduled">Scheduled</option>
-                <option value="Completed">Completed</option>
-                <option value="Canceled">Canceled</option>
-            </select>
-        </div>
-    
-        <!-- Appointment Table -->
-        <table id="appointmentTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Patient Name</th>
-                    <th>Doctor Name</th>
-                    <th>Appointment Date</th>
-                    <th>Appointment Time</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Appointment rows will be populated here -->
-            </tbody>
-        </table>
-    </section>
-    
-    <!-- Edit Appointment Modal -->
-    <div id="editAppointmentModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" id="closeAppointmentModal">&times;</span>
-            <form id="editAppointmentForm">
-                <input type="hidden" id="appointmentId" name="appointmentId">
-    
-                <label for="editPatientId">Patient Id:</label>
-                <input type="text" id="editPatientId" name="patientId" readonly>
-    
-                <label for="editDoctorName">Doctor Id:</label>
-                <input type="text" id="editDoctorId" name="doctorId" readonly>
-    
-                <label for="editAppointmentDate">Appointment Date:</label>
-                <input type="date" id="editAppointmentDate" name="appointmentDate" required>
-    
-                <label for="editAppointmentTime">Appointment Time:</label>
-                <input type="time" id="editAppointmentTime" name="appointmentTime" required>
-    
-                <label for="editStatus">Status:</label>
-                <select id="editStatus" name="status" required>
-                    <option value="scheduled">Scheduled</option>
-                    <option value="completed">Completed</option>
-                    <option value="canceled">Canceled</option>
+        <!-- Appointment Section -->
+        <section class="appointment container my-4">
+
+            <div class="appointment-h2">
+                <h3 class="appointment-heading">Appointment List</h3> <!-- Only one h2 -->
+            </div>
+            <!-- Search and Filter Options -->
+            <div class="search-filter mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by Patient or Doctor Name"
+                    onkeyup="filterAppointmentTable()">
+                <select id="appointmentFilter" class="form-select mt-2" onchange="filterAppointmentTable()">
+                    <option value="">All Status</option>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Canceled">Canceled</option>
                 </select>
-    
-                <button type="submit">Update Appointment</button>
-            </form>
+            </div>
+
+            <!-- Appointment Table -->
+            <table id="appointmentTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Appointment Date</th>
+                        <th>Appointment Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Appointment rows will be populated here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Edit Appointment Modal -->
+        <div id="editAppointmentModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="closeAppointmentModal">&times;</span>
+                <form id="editAppointmentForm">
+                    <input type="hidden" id="appointmentId" name="appointmentId">
+
+                    <label for="editPatientId">Patient Id:</label>
+                    <input type="text" id="editPatientId" name="patientId" readonly>
+
+                    <label for="editDoctorName">Doctor Id:</label>
+                    <input type="text" id="editDoctorId" name="doctorId" readonly>
+
+                    <label for="editAppointmentDate">Appointment Date:</label>
+                    <input type="date" id="editAppointmentDate" name="appointmentDate" required>
+
+                    <label for="editAppointmentTime">Appointment Time:</label>
+                    <input type="time" id="editAppointmentTime" name="appointmentTime" required>
+
+                    <label for="editStatus">Status:</label>
+                    <select id="editStatus" name="status" required>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="completed">Completed</option>
+                        <option value="canceled">Canceled</option>
+                    </select>
+
+                    <button type="submit">Update Appointment</button>
+                </form>
+            </div>
         </div>
+
+
     </div>
-    
-
-    
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Telemedicine App. All rights reserved.</p>
@@ -117,5 +116,5 @@
     </footer>
     <script src="appointment.js"></script>
 </body>
+
 </html>
-     

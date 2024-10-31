@@ -91,7 +91,7 @@ nav ul li a:hover {
 .appointment-h2 {
     display: block; /* or display: flex; */
     justify-content: center;
-    width: 38%;
+    width: 65%;
     max-width: 500px;
     text-align: center;
     background-color: #a2d0f8;
@@ -169,8 +169,8 @@ nav ul li a:hover {
 }
 
 /* Modal content styling */
-#editAppointmentModal .modal-content {
-    background-color: #007bff; /* Blue background */
+#editAppointmentModal .modal-content { 
+    background-color: #4999df; /* Blue background */
     margin: 15% auto;
     padding: 20px;
     border-radius: 10px; /* Rounded corners */
@@ -227,6 +227,44 @@ nav ul li a:hover {
     background-color: #45a049; /* Darker shade on hover */
 }
 
+.edit-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.cancel-btn {
+    background-color: red; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+    background-color: #45a049; /* Darker green */
+}
+
 /* Shake Animation */
 @keyframes shake {
     0% { transform: translate(0); }
@@ -237,4 +275,23 @@ nav ul li a:hover {
 }
 
 
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
+}
+
+  
+  
+
+footer {
+
+    margin-top: auto;
+    /* Push footer to bottom */
+    text-align: center;
+    padding: 0.6rem;
+    background: rgba(0, 0, 255, 0.772);
+    color: #fff;
+
+}

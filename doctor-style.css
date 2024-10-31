@@ -1,7 +1,8 @@
 header {
     background: rgba(0, 0, 255, 0.772);
     color: #fff;
-    padding: 5px; /* Adjust this value for desired spacing */
+    padding: 5px;
+    /* Adjust this value for desired spacing */
     text-align: center;
     border-bottom: 5px solid #00307a;
     position: fixed;
@@ -15,19 +16,24 @@ header {
 }
 
 .doctor {
-    margin-top: 70px; /* Adjust this value as needed for space below the header */
-    padding: 20px; /* Optional: Add padding for better layout */
+    margin-top: 70px;
+    /* Adjust this value as needed for space below the header */
+    padding: 20px;
+    /* Optional: Add padding for better layout */
 }
+
 .doctor-h2 {
-    display: block; /* or display: flex; */
+    display: block;
+    /* or display: flex; */
     justify-content: center;
-    width: 20%;
+    width: 40%;
     max-width: 500px;
     text-align: center;
     background-color: #a2d0f8;
     padding: 0px;
     border-radius: 5px;
-    margin: 50px auto 20px auto; /* Center horizontally */
+    margin: 50px auto 20px auto;
+    /* Center horizontally */
     height: 70px;
     margin-bottom: 23px;
 
@@ -37,16 +43,19 @@ header {
     font-size: 34px;
     margin: 0;
     color: black;
-    line-height: 1.8; 
+    line-height: 1.8;
 }
+
 .doctor-h2:hover {
     animation: shake 0.5s ease-in-out;
 }
 
 .text-center {
-    margin-top: 40px; /* Adjust this value as needed */
-    
+    margin-top: 40px;
+    /* Adjust this value as needed */
+
 }
+
 .error-message {
     color: red;
     font-size: 0.9em;
@@ -55,31 +64,40 @@ header {
 
 
 .search-filter {
-    margin-bottom: 20px; /* Space below the filter div */
+    margin-bottom: 20px;
+    /* Space below the filter div */
 }
 
 .table {
-    margin-top: 20px; /* Space above the table */
-    width: 100%; /* Ensure the table takes full width */
-    border-collapse: collapse; /* Optional: for better table appearance */
+    margin-top: 20px;
+    /* Space above the table */
+    width: 100%;
+    /* Ensure the table takes full width */
+    border-collapse: collapse;
+    /* Optional: for better table appearance */
 }
 
-.table th, .table td {
-    padding: 10px; /* Add padding inside table cells */
-    border: 1px solid #ddd; /* Optional: adds border around table cells */
+.table th,
+.table td {
+    padding: 10px;
+    /* Add padding inside table cells */
+    border: 1px solid #ddd;
+    /* Optional: adds border around table cells */
 }
 
 .table th {
-    background-color: #f2f2f2; /* Optional: background color for header */
+    background-color: #f2f2f2;
+    /* Optional: background color for header */
 }
 
 
 header nav ul li a:hover {
-    transform: scale(1.1); 
-    color: darkgray; 
-    cursor: pointer; 
+    transform: scale(1.1);
+    color: darkgray;
+    cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
 }
+
 nav ul {
     list-style: none;
     display: flex;
@@ -93,15 +111,16 @@ nav ul li {
 
 nav ul li a {
     color: #fff;
-    font-size: 14px; 
+    font-size: 14px;
     text-decoration: none;
-    transition: transform 0.3s ease, color 0.3s ease; 
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 nav ul li a:hover {
-    animation: shake 0.5s forwards; /* Shake effect on hover */
-    color: darkgray; 
-    cursor: pointer; 
+    animation: shake 0.5s forwards;
+    /* Shake effect on hover */
+    color: darkgray;
+    cursor: pointer;
 }
 
 
@@ -119,30 +138,29 @@ nav ul li a:hover {
 }
 
 .media-icons a:hover {
-    transform: scale(1.5); 
-    color: darkgray; 
-    cursor: pointer; 
+    transform: scale(1.5);
+    color: darkgray;
+    cursor: pointer;
 }
 
 .media-icons h2 {
-    font-size: 1.8rem; 
-    font-weight: bold; 
-    font-family: 'Open Sans', sans-serif; 
-    font-style: italic; 
-    color: White; 
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-style: italic;
+    color: White;
     left: 85%;
     margin-top: 1rem;
     text-align: left;
-    
+
 }
 
 .media-icons h2:hover {
-    animation: shake 0.5s forwards; 
+    animation: shake 0.5s forwards;
 }
 
 
 /****************************************************************EDIT*******************************/
-/* Modal container styling */
 /* Modal container styling */
 .modal {
     display: none;
@@ -151,20 +169,27 @@ nav ul li a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000; /* Ensure the modal appears above other elements */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 1000;
+    /* Ensure the modal appears above other elements */
 }
 
 /* Modal content styling */
-.modal-content {
-    background-color: #007bff; /* Change this to the desired blue color */
+#editDoctorModal .modal-content {
+    background-color: #4999df;
+    /* Change this to the desired blue color */
     margin: 15% auto;
     padding: 20px;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
+    /* Rounded corners */
     border: 1px solid #888;
-    width: 70%; /* Adjust the width here (e.g., 70% of the screen width) */
-    max-width: 600px; /* Optional: limit the maximum width */
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    width: 70%;
+    /* Adjust the width here (e.g., 70% of the screen width) */
+    max-width: 600px;
+    /* Optional: limit the maximum width */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    /* Add shadow for depth */
 }
 
 /* Close button */
@@ -172,13 +197,15 @@ nav ul li a:hover {
     float: right;
     font-size: 28px;
     font-weight: bold;
-    color: #fff; /* Changed for better visibility */
+    color: #fff;
+    /* Changed for better visibility */
     cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: #ffcc00; /* Change close button hover color */
+    color: #ffcc00;
+    /* Change close button hover color */
     text-decoration: none;
     cursor: pointer;
 }
@@ -186,32 +213,44 @@ nav ul li a:hover {
 /* Style for form fields */
 #editDoctorForm label {
     display: block;
-    margin-bottom: 5px; /* Space between label and input field */
+    margin-bottom: 5px;
+    /* Space between label and input field */
 }
 
 #editDoctorForm input,
 #editDoctorForm textarea {
     width: 100%;
-    padding: 8px; /* Padding inside the input fields */
-    margin-bottom: 20px; /* Space below each input field */
-    box-sizing: border-box; /* Ensure padding does not affect width */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 5px; /* Optional: add rounded corners to inputs */
-    background-color: #f0f0f0; /* Set background color to light grey */
-    color: #333; /* Text color */
+    padding: 8px;
+    /* Padding inside the input fields */
+    margin-bottom: 20px;
+    /* Space below each input field */
+    box-sizing: border-box;
+    /* Ensure padding does not affect width */
+    border: 1px solid #ccc;
+    /* Border color */
+    border-radius: 5px;
+    /* Optional: add rounded corners to inputs */
+    background-color: #f0f0f0;
+    /* Set background color to light grey */
+    color: #333;
+    /* Text color */
 }
 
 #editDoctorForm button {
     padding: 10px 15px;
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Button text color */
+    background-color: #4CAF50;
+    /* Button background color */
+    color: white;
+    /* Button text color */
     border: none;
-    border-radius: 5px; /* Optional: round button corners */
+    border-radius: 5px;
+    /* Optional: round button corners */
     cursor: pointer;
 }
 
 #editDoctorForm button:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #45a049;
+    /* Darker shade on hover */
 }
 
 
@@ -219,86 +258,200 @@ nav ul li a:hover {
 /****************************************************************BOOKING*******************************/
 /* Modal container styling */
 .modal {
-    display: none; /* Hide by default */
+    display: none;
+    /* Hide by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000; /* Ensure the modal appears above other elements */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 1000;
+    /* Ensure the modal appears above other elements */
 }
 
 /* Modal content styling */
-.modal-content {
-    background-color: #007bff; /* Blue color similar to edit modal */
-    margin: 10% auto; /* Center the modal */
+#bookingModal .modal-content {
+    background-color: #4999df;
+    /* Blue color similar to edit modal */
+    margin: 10% auto;
+    /* Center the modal */
     padding: 20px;
-    border-radius: 10px; /* Rounded corners */
-    border: 1px solid #888; /* Border color */
-    width: 70%; /* Adjust the width here (e.g., 70% of the screen width) */
-    max-width: 600px; /* Optional: limit the maximum width */
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    border-radius: 10px;
+    /* Rounded corners */
+    border: 1px solid #888;
+    /* Border color */
+    width: 70%;
+    /* Adjust the width here (e.g., 70% of the screen width) */
+    max-width: 600px;
+    /* Optional: limit the maximum width */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    /* Add shadow for depth */
 }
+
+
 
 /* Close button styling */
 .close {
-    float: right; /* Position the close button to the right */
-    font-size: 28px; /* Size of the close button */
+    float: right;
+    /* Position the close button to the right */
+    font-size: 28px;
+    /* Size of the close button */
     font-weight: bold;
-    color: #fff; /* Changed for better visibility */
-    cursor: pointer; /* Pointer cursor on hover */
+    color: #fff;
+    /* Changed for better visibility */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
 
 .close:hover,
 .close:focus {
-    color: #ffcc00; /* Change close button hover color */
-    text-decoration: none; /* Remove underline on hover */
-    cursor: pointer; /* Pointer cursor on hover */
+    color: #ffcc00;
+    /* Change close button hover color */
+    text-decoration: none;
+    /* Remove underline on hover */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
 
 /* Style for form fields in the booking modal */
 #bookingForm label {
-    display: block; /* Make labels block elements */
-    margin-bottom: 5px; /* Space between label and input field */
+    display: block;
+    /* Make labels block elements */
+    margin-bottom: 5px;
+    /* Space between label and input field */
 }
 
 #bookingForm input,
 #bookingForm select {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding inside the input fields */
-    margin-bottom: 15px; /* Space below each input field */
-    box-sizing: border-box; /* Ensure padding does not affect width */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 5px; /* Rounded corners */
-    background-color: #f0f0f0; /* Light grey background */
-    color: #333; /* Text color */
+    width: 100%;
+    /* Full width */
+    padding: 10px;
+    /* Padding inside the input fields */
+    margin-bottom: 15px;
+    /* Space below each input field */
+    box-sizing: border-box;
+    /* Ensure padding does not affect width */
+    border: 1px solid #ccc;
+    /* Border color */
+    border-radius: 5px;
+    /* Rounded corners */
+    background-color: #f0f0f0;
+    /* Light grey background */
+    color: #333;
+    /* Text color */
 }
 
 /* Button styling */
 #bookingForm button {
-    padding: 10px 15px; /* Button padding */
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    padding: 10px 15px;
+    /* Button padding */
+    background-color: #4CAF50;
+    /* Button background color */
+    color: white;
+    /* Button text color */
+    border: none;
+    /* No border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
 
 #bookingForm button:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #45a049;
+    /* Darker shade on hover */
 }
+
 .text-danger {
     color: red;
     margin-top: 5px;
     font-size: 12px;
 }
 
+.book-session-btn {
+    background-color: #4CAF50;
+    /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.book-session-btn:hover {
+    background-color: #45a049;
+    /* Darker green */
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+    /* Darker green */
+}
+
 /* Shake Animation */
 @keyframes shake {
-    0% { transform: translate(0); }
-    25% { transform: translate(-2px, 0); }
-    50% { transform: translate(2px, 0); }
-    75% { transform: translate(-2px, 0); }
-    100% { transform: translate(0); }
+    0% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(-2px, 0);
+    }
+
+    50% {
+        transform: translate(2px, 0);
+    }
+
+    75% {
+        transform: translate(-2px, 0);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+  
+  
+
+footer {
+
+    margin-top: auto;
+    /* Push footer to bottom */
+    text-align: center;
+    padding: 0.6rem;
+    background: rgba(0, 0, 255, 0.772);
+    color: #fff;
+
 }

@@ -53,19 +53,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const loginForm = document.getElementById('loginForm');
-
+    
             if (loginForm) {
                 loginForm.addEventListener('submit', function (event) {
                     event.preventDefault(); // Prevent default form submission
-
+    
+                    // Clear previous error messages
                     clearErrors();
-
+    
+                    // Define email pattern (regular expression for basic email validation)
                     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+                    // Get form field values for Login
                     const email = document.getElementById('loginemail').value.trim();
                     const password = document.getElementById('loginpassword').value.trim();
-
+    
                     let valid = true;
-
+    
+                    // Validate Email
                     if (email === "") {
                         displayError('loginemail', 'Email is required');
                         valid = false;
@@ -73,47 +78,77 @@
                         displayError('loginemail', 'Please enter a valid email address');
                         valid = false;
                     }
-
+    
+                    // Validate Password
                     if (password === "") {
                         displayError('loginpassword', 'Password is required');
                         valid = false;
                     }
-
+    
+                    // If valid, submit the form
                     if (valid) {
-                        const loginData = { loginemail: email, loginpassword: password };
-
+                        console.log('Form is valid. Submitting...');
+                        const loginData = {
+                            loginemail: email, // Ensure this matches your backend
+                            loginpassword: password // Ensure this matches your backend
+                        };
+    
                         fetch('/login', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
                             body: JSON.stringify(loginData),
                         })
-                            .then(response => response.json())
-                            .then(data => {
+                        .then(response => {
+                            // Log the response status for better debugging
+                            console.log('Response Status:', response.status);
+                            console.log('Response Status Text:', response.statusText);
+    
+                            // Handle non-JSON responses (e.g., HTML error pages)
+                            return response.text().then(text => {
+                                try {
+                                    const data = JSON.parse(text); // Try to parse response as JSON
+                                    return { data, isJson: true };
+                                } catch (err) {
+                                    console.warn('Response is not valid JSON, logging as text:', text);
+                                    return { data: text, isJson: false }; // Return the raw text if not JSON
+                                }
+                            });
+                        })
+                        .then(result => {
+                            if (result.isJson) {
+                                const data = result.data;
+                                // Assuming the server responds with a JSON object containing success and patientId
                                 if (data.success) {
-                                    // Redirect based on server response
-                                    if (data.redirect) {
-                                        window.location.href = data.redirect;
-                                    }
+                                    sessionStorage.setItem('patientId', data.patientId); // Store patient ID in session storage
+                                    window.location.href = '/index'; // Redirect to profile page
                                 } else {
                                     displayError('loginemail', data.message || 'Login failed');
                                 }
-                            })
-                            .catch(error => {
-                                console.error('Error logging in:', error);
-                                displayError('loginemail', 'An error occurred during login. Please try again.');
-                            });
+                            } else {
+                                // Handle non-JSON responses (e.g., an HTML page response)
+                                console.error('Non-JSON response received:', result.data);
+                                displayError('loginemail', 'An unexpected error occurred. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            // Log the error in the console for debugging
+                            console.error('Error logging in:', error);
+                            // Display a user-friendly error message
+                            displayError('loginemail', 'An error occurred during login. Please try again.');
+                        });
                     }
                 });
             }
         });
-
-
+    
         // Function to display error messages
         function displayError(fieldId, message) {
             const field = document.getElementById(fieldId);
             const errorDivId = fieldId + '-error'; // Assuming there are divs with IDs like 'loginemail-error' and 'loginpassword-error'
             const errorDiv = document.getElementById(errorDivId);
-
+    
             // If error div doesn't exist, create one dynamically
             if (!errorDiv) {
                 const newErrorDiv = document.createElement('div');
@@ -127,7 +162,7 @@
                 errorDiv.innerText = message; // Update the message if error div already exists
             }
         }
-
+    
         // Function to clear error messages
         function clearErrors() {
             const errorMessages = document.querySelectorAll('.error');
@@ -136,7 +171,7 @@
             });
         }
     </script>
-
+    
 </body>
 
 </html>

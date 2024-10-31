@@ -16,66 +16,64 @@
 
 
 <body>
-    <!-- Header section -->
-    <header>
-        <!-- Social Media Icons Container -->
-        <div class="media-icons">
-            <h2><a href="index" id="homeLink">Telemedicine</a></h2>
+    <div class="container">
+        <!-- Header section -->
+        <header>
+            <!-- Social Media Icons Container -->
+            <div class="media-icons">
+                <h2><a href="javascript:void(0);" id="homeLink" onclick="redirectToTelemedicine()">Telemedicine</a></h2>
+            </div>
+            <nav>
+                <ul>
+
+                    <li><a href="javascript:void(0);" onclick="redirectToTelemedicine()">Telemedicine</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-------------------------------------- Patient  Header Section with Bootstrap Carousel ----------------------------------------->
 
 
-        </div>
-        <nav>
-            <ul>
+        <section class="patient">
+            <div class="patient-h2">
+                <h3 class="patient-heading">Patient List</h3> <!-- Only one h2 -->
+            </div>
 
-                <li><a href="doctor">Doctors</a></li>
-                <li><a href="appointment">Appointment</a></li>
-                <li><a href="contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+            <!-- Search and Filter Options -->
+            <div class="search-filter">
+                <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="filterTable()">
 
-    <!-------------------------------------- Patient  Header Section with Bootstrap Carousel ----------------------------------------->
+                <!-- Label for the gender filter -->
+                <label for="genderFilter" class="visually-hidden">Filter by gender:</label>
+                <select id="genderFilter" onchange="filterTable()">
+                    <option value="">All Genders</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
 
-
-    <section class="patient">
-        <div class="patient-h2">
-            <h3 class="patient-heading">Patient List</h3> <!-- Only one h2 -->
-        </div>
-    
-        <!-- Search and Filter Options -->
-        <div class="search-filter">
-            <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="filterTable()">
-           
-            <!-- Label for the gender filter -->
-            <label for="genderFilter" class="visually-hidden">Filter by gender:</label>
-            <select id="genderFilter" onchange="filterTable()">
-                <option value="">All Genders</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-    
-        <!-- Patient Table -->
-        <table id="patientTable" class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Date of Birth</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dynamic rows will be inserted here by JavaScript -->
-            </tbody>
-        </table>
-    </section>
-    
+            <!-- Patient Table -->
+            <table id="patientTable" class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </div>
 
 
 

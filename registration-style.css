@@ -82,14 +82,19 @@ header {
     border: 1px solid #ccc;
     border-radius: 8px;
     width: 100%;
-    max-width: 400px;
     margin: 0 auto; 
+    max-height: 600px; /* Set a maximum height for the form */
+    overflow-y: auto;  /* Allow vertical scrolling if content exceeds */
 }
-
+.contact-form label {
+    font-size: 1.0rem; /* Reduce label font size */
+}
 /* Headings */
 .contact-heading {
     text-align: center;
     color: white; 
+    margin-bottom: -11px; /* Reduce spacing between heading and content */
+    font-size: 1.5rem; /* Reduce from current size */
 }
 
 .contact-form h4 {
@@ -141,6 +146,7 @@ header {
 #registration form .terms-wrapper {
     align-self: flex-start; 
     width: 100%; 
+    margin-bottom: -1rem; /* Reduce space between elements */
 }
 
 /* Form Styling */
@@ -162,12 +168,13 @@ header {
 #registration form input,
 #registration form textarea {
     width: 95%;                    
-    padding: 0.75rem;               
+    padding: 0.5rem; /* Reduce padding from 0.75rem to 0.5rem */            
     border: 1px solid #555;         
     border-radius: 4px;              
     background-color: #444;         
     color: #fff;                   
     box-sizing: border-box;  
+    height: auto; /* Ensure the height auto-adjusts */
 }
 
 /* Textarea Specific Styling */
