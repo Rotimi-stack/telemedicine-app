@@ -122,12 +122,12 @@ nav ul li a:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
     width: 800px; /* Width of the profile container */
     margin-top: -65px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 /* Shake on hover */
 .profile-container:hover {
-    animation: shake 0.5s ease-in-out; /* Apply shake animation */
+    animation: shake 0.3s ease-in-out; /* Apply shake animation */
 }
 
 

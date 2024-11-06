@@ -1,5 +1,6 @@
 // Import required packages
 const http = require('http');
+const cors = require('cors');
 const fs = require('fs'); // To handle file system operations
 const path = require('path'); // To resolve file paths
 const db = require('./database'); // Import the database connection
@@ -12,8 +13,6 @@ const bcrypt = require('bcrypt');
 const mysql = require('mysql2');
 
 
-//Cross origin resource sharing
-const cors = require('cors');
 
 
 
@@ -25,7 +24,7 @@ const app = express();
 
 
 
-
+//Cross origin resource sharing
 app.use(cors());
 
 
