@@ -1,3 +1,11 @@
+function getToken() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        console.error('No token found in localStorage');
+    }
+    return token;
+}
+
 // Function to filter the appointment table based on search input and status filter
 function filterAppointmentTable() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
@@ -56,9 +64,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchAppointmentData();
 
+
+
     // Function to fetch and display appointments in the table
     function fetchAppointmentData() {
-        fetch('/fetch-appointments')
+
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            return; // Don't continue if token is missing
+        }
+
+        fetch('/fetch-appointments', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 console.log('Response status:', response.status);
                 if (!response.ok) {
@@ -112,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         // Add a "Cancel" button
-                        
+
                         const cancelCell = row.insertCell(7);
                         const cancelButton = document.createElement('button');
                         cancelButton.className = 'cancel-btn';
@@ -164,6 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ///Submit updated appointment
     document.getElementById('editAppointmentForm').onsubmit = function (event) {
+
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            return; // Don't continue if token is missing
+        }
         event.preventDefault();
 
         const appointmentData = {
@@ -178,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`/update-appointment/${appointmentData.id}`, {
             method: 'PUT',
             headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(appointmentData),

@@ -1,3 +1,12 @@
+function getToken() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        console.error('No token found in localStorage');
+    }
+    return token;
+}
+
+
 // Function to filter the patient table based on search input and gender filter
 function filterTable() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
@@ -26,48 +35,28 @@ function filterTable() {
     }
 }
 
-function redirectToTelemedicine() {
-    // Fetch the user session to determine the role
-    fetch('/check-session')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.role === 'admin') {
-                window.location.href = 'admin'; // Redirect to admin.html
-            } else {
-                window.location.href = 'index'; // Redirect to index.html
-            }
-        })
-        .catch(error => {
-            console.error('Error checking session:', error);
-            // Optionally redirect to a generic page or show an error message
-        });
-}
+document.getElementById('telemedicine-link-nav').addEventListener('click', redirectToTelemedicine);
+document.getElementById('telemedicine-link').addEventListener('click', redirectToTelemedicine);
 
 function redirectToTelemedicine() {
-    // Fetch the user session to determine the role
-    fetch('/check-session')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.role === 'admin') {
-                window.location.href = 'admin'; // Redirect to admin.html
-            } else {
-                window.location.href = 'index'; // Redirect to index.html
-            }
-        })
-        .catch(error => {
-            console.error('Error checking session:', error);
-            // Optionally redirect to a generic page or show an error message
-        });
+    const token = localStorage.getItem('jwt');
+  if (!token) {
+    console.log('No token found in localStorage');
+    return;
+  }
+
+  try {
+    const decoded = jwt_decode(token);
+    const patientId = decoded.id;
+
+    if (patientId && window.location.pathname !== '/admin.html') {
+      window.location.href = 'index.html';
+    } else {
+      console.error('Invalid Admin ID');
+    }
+  } catch (error) {
+    console.error('Error decoding token:', error);
+  }
 }
 
 
@@ -78,7 +67,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to fetch and display patients in the table
     function fetchPatientData() {
-        fetch('/fetch-patients')
+
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+          return; // Don't continue if token is missing
+        }
+
+        fetch('/fetch-patients',{
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 console.log('Response status:', response.status); // Log the response status
                 if (!response.ok) {

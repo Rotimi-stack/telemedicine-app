@@ -1,3 +1,12 @@
+
+function getToken() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        console.error('No token found in localStorage');
+    }
+    return token;
+}
+
 // Function to filter the doctor table based on search input
 function filterDoctorTable() {
     const searchInput = document.getElementById('searchDoctor').value.toLowerCase();
@@ -23,26 +32,29 @@ function filterDoctorTable() {
     }
 }
 
+
+document.getElementById('telemedicine-link-nav').addEventListener('click', redirectToTelemedicine);
+document.getElementById('telemedicine-link').addEventListener('click', redirectToTelemedicine);
+
 function redirectToTelemedicine() {
-    // Fetch the user session to determine the role
-    fetch('/check-session')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.role === 'admin') {
-                window.location.href = 'admin'; // Redirect to admin.html
-            } else {
-                window.location.href = 'index'; // Redirect to index.html
-            }
-        })
-        .catch(error => {
-            console.error('Error checking session:', error);
-            // Optionally redirect to a generic page or show an error message
-        });
+    const token = localStorage.getItem('jwt');
+  if (!token) {
+    console.log('No token found in localStorage');
+    return;
+  }
+
+  try {
+    const decoded = jwt_decode(token);
+    const patientId = decoded.id;
+
+    if (patientId && window.location.pathname !== '/admin.html') {
+      window.location.href = 'index.html';
+    } else {
+      console.error('Invalid Admin ID');
+    }
+  } catch (error) {
+    console.error('Error decoding token:', error);
+  }
 }
 
 
@@ -80,11 +92,27 @@ document.addEventListener("DOMContentLoaded", function () {
         clearValidationMessages();
 
         const formData = new FormData(this); // Collect form data
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            return; // Don't continue if token is missing
+        }
+
+         // Convert FormData to an object to make it JSON-friendly
+         const doctorData = {};
+         formData.forEach((value, key) => {
+             doctorData[key] = value;
+         });
+
 
         // Send a POST request to add a new doctor
         fetch('/add-doctor', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
             method: 'POST',
-            body: new URLSearchParams(formData) // Convert form data to URL-encoded format
+            body: JSON.stringify(doctorData) // Send form data as JSON // Convert form data to URL-encoded format
         })
 
 
@@ -108,7 +136,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to fetch and display doctors in the table
     // Function to fetch and display doctors in the table
     function fetchDoctorData() {
-        fetch('/fetch-doctors') // Call the API endpoint
+
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            return; // Don't continue if token is missing
+        }
+
+        fetch('/fetch-doctors', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }) // Call the API endpoint
             .then(response => {
                 console.log('Response status:', response.status); // Check response status
                 return response.json();
@@ -188,30 +229,51 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Handle form submission for updating doctor
+    // Handle form submission for updating doctor
     document.getElementById('editDoctorForm').onsubmit = function (event) {
         event.preventDefault(); // Prevent default form submission behavior
 
         const formData = new FormData(this); // Collect form data
         const doctorId = document.getElementById('doctorId').value; // Get doctor ID
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            alert('You must be logged in to update doctor information.');
+            return; // Don't continue if token is missing
+        }
+
+        // Convert FormData to an object to make it JSON-friendly
+        const doctorData = {};
+        formData.forEach((value, key) => {
+            doctorData[key] = value;
+        });
 
         // Send a PUT request to update the doctor
         fetch(`/update-doctor/${doctorId}`, {
             method: 'PUT',
-            body: new URLSearchParams(formData) // Convert form data to URL-encoded format
+            headers: {
+                'Authorization': `Bearer ${token}`, // Correct header format
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(doctorData) // Send form data as JSON
         })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.text(); // Assuming the response is a plain text message
             })
             .then(result => {
                 alert(result); // Notify user of the update status
                 document.getElementById('editDoctorModal').style.display = 'none'; // Hide the modal
-                fetchDoctorData(); // Refresh the list of doctors
+                fetchDoctorData(); // Refresh the list of doctors (assuming this function exists)
             })
-            .catch(error => console.error('Error updating doctor:', error));
+            .catch(error => {
+                console.error('Error updating doctor:', error);
+                alert('Error updating doctor. Please try again.');
+            });
     };
+
 
 
 
@@ -237,12 +299,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.getElementById('patientId').value = loggedInPatientId;
 
+        if (loggedInPatientId) {
+            document.getElementById('patientId').value = loggedInPatientId;
+        } else {
+            console.error('Patient ID not found!');
+            alert('Patient ID is not found. Please log in again.');
+        }
+
         // Show the booking modal
         document.getElementById('bookingModal').style.display = 'block';
     }
 
     function getLoggedInPatientId() {
-        return sessionStorage.getItem('patientId'); // Ensure patient ID is stored in session storage upon login
+        // Get the JWT token from localStorage
+        const token = localStorage.getItem('jwt');
+
+        if (!token) {
+            console.error('No JWT token found in localStorage');
+            return null; // Return null if no token is found
+        }
+
+        try {
+            // Decode the JWT token and retrieve the patientId from the payload
+            const decodedToken = jwt_decode(token); // Using jwt-decode library
+            console.log('Decoded token:', decodedToken); // Debugging the decoded token
+            return decodedToken.id; // Assuming patientId is in the decoded token
+        } catch (error) {
+            console.error('Error decoding JWT token:', error);
+            return null; // Return null if decoding fails
+        }
     }
 
     // Close modal when clicking the close button
@@ -260,11 +345,19 @@ document.addEventListener("DOMContentLoaded", function () {
     function createAppointment() {
         console.log('createAppointment function called');
 
+        const token = getToken(); // Get the token using the helper function
+
+        if (!token) {
+            return; // Don't continue if token is missing
+        }
+
+
         // Clear previous validation messages
         clearValidationMessages();
 
+
         // Retrieve values from the input fields
-        const patientId = document.getElementById('patientId').value;
+
         const doctorId = document.querySelector('#bookingForm #doctorId').value;
         const appointmentDate = document.getElementById('appointmentDate').value;
         const appointmentTime = document.getElementById('appointmentTime').value;
@@ -311,6 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('/create-appointment', {
             method: 'POST',
             headers: {
+                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(appointmentData),

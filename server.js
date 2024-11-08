@@ -1,5 +1,5 @@
 // Import required packages
-const http = require('http');
+const https = require('https'); // Changed from 'http' to 'https'
 const cors = require('cors');
 const fs = require('fs'); // To handle file system operations
 const path = require('path'); // To resolve file paths
@@ -9,37 +9,32 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
+
+
 //DBMS Mysql
 const mysql = require('mysql2');
-
-
-
-
 
 //initialize
 const app = express();
 
-
-
-
-
-
 //Cross origin resource sharing
 app.use(cors());
 
-
 // Middleware to serve static files (like CSS, JS)
 app.use(express.static(__dirname));
-
-
 
 // Set up session management
 app.use(session({
     secret: 'your-secret-key', // Replace with a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: true } // Set to true if using HTTPS
 }));
+app.use(express.json()); // For parsing application/json
+
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'victortelemedapp07#'; // Replace with a strong secret key
+
 
 
 
@@ -60,6 +55,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
+// Define the paths for the certificate and key files
+const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, 'server.key')), // Path to server.key
+    cert: fs.readFileSync(path.join(__dirname, 'server.cert'))  // Path to server.crt
+};
+
+
+//authentication middleare that performs validation of the token
+function authenticateToken(req, res, next) {
+    const token = req.headers['authorization']?.split(' ')[1]; // Expecting "Bearer <token>"
+
+    if (!token) return res.status(401).json({ message: 'Access token required' });
+
+    console.log('Token received:', token);  // Log the token for debugging
+
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) return res.status(403).json({ message: 'Invalid token' });
+
+        // Check if it's an admin or a patient
+        if (decoded.role) {
+            // It's an admin, role is available
+            req.user = { id: decoded.id, role: decoded.role };
+        } else {
+            // It's a patient, only id is available
+            req.user = { id: decoded.id };
+        }
+
+        next();  // Proceed to the next middleware/route handler
+    });
+}
+
 
 
 // Serve the index.html page
@@ -78,12 +104,15 @@ app.get('/index', (req, res) => {
 
 
 // Serve the admin.html page 
-app.get('/admin', (req, res) => {
-    // Check if the user is logged in as an admin
-    if (!req.session.adminId) {
-        // If not, return a 401 Unauthorized status
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
+// Protect the /admin route with JWT authentication
+app.get('/admin', authenticateToken, (req, res) => {
+    // Check if the authenticated user is an admin
+    if (req.user.role !== 'admin') {
+        // If not an admin, respond with a 403 Forbidden status
+        return res.status(403).json({ success: false, message: 'Forbidden: Admin access only' });
     }
+
+    // Serve the admin.html page
     const filePath = path.join(__dirname, 'admin.html');
     fs.readFile(filePath, (err, data) => {
         if (err) {
@@ -94,8 +123,6 @@ app.get('/admin', (req, res) => {
         }
     });
 });
-
-
 
 
 
@@ -169,8 +196,10 @@ app.post('/login', (req, res) => {
         if (patientRows.length > 0) {
             // Patient found, redirect to index
             const patient = patientRows[0];
+            const token = jwt.sign({ id: patient.id }, SECRET_KEY, { expiresIn: '1h' });
+            console.log('JWT Token:', token);  // Log the token to the console
             req.session.patientId = patient.id;
-            return res.json({ success: true, patientId: patient.id, redirect: '/index' });
+            return res.json({ success: true, token, redirect: '/index' });
         }
 
         // If not found in patients, check in the admin table
@@ -187,11 +216,12 @@ app.post('/login', (req, res) => {
 
             // User found in admin table, check role
             const admin = adminRows[0];
+            const token = jwt.sign({ id: admin.id, role: admin.role }, SECRET_KEY, { expiresIn: '1h' });
             req.session.adminId = admin.id;
 
             if (admin.role === 'admin') {
                 // If the role is admin, redirect to Patient.html
-                return res.json({ success: true, adminId: admin.id, redirect: '/admin.html' });
+                return res.json({ success: true, token, redirect: '/admin.html' });
             } else {
                 return res.status(403).json({ success: false, message: 'Access restricted to admins.' });
             }
@@ -204,10 +234,9 @@ app.post('/login', (req, res) => {
 
 // ---------------------------------------------Serve profile.html page (when the user navigates to the profile)--------------------------
 app.get('/profile', (req, res) => {
-    if (!req.session.patientId) {
+    if (!req.session.patientId && !req.session.adminId) {  // Check for either patientId or adminId
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
-
     const filePath = path.join(__dirname, 'profile.html');
     fs.readFile(filePath, (err, data) => {
         if (err) {
@@ -220,39 +249,31 @@ app.get('/profile', (req, res) => {
 });
 
 // Fetch patient profile data via AJAX request
-app.get('/fetch-profile', (req, res) => {
-    if (!req.session.patientId) {
-        return res.status(403).send('Not authenticated');
-    }
-
-    const patientId = req.session.patientId; // Assuming session stores logged-in patient's ID
+app.get('/fetch-profile', authenticateToken,(req, res) => {
+    const patientId = req.user.id; // Get the patient's ID from the JWT
     const sql = `SELECT id, first_name, last_name, phone, date_of_birth, gender, address FROM patients WHERE id = ?`;
 
     db.query(sql, [patientId], (err, rows) => {
         if (err) {
+            console.error('Error fetching profile data:', err);
             return res.status(500).send('Error fetching profile data.');
         }
 
-        // Log the rows received to check the data structure
         console.log('Fetched profile data:', rows);
 
         if (rows.length > 0) {
-            // Send the first patient data as a single JSON object
-            res.json(rows[0]); // Send the first row as JSON directly
+            res.json(rows[0]);
         } else {
-            res.status(404).send('Patient not found.'); // Handle the case where no patient is found
+            res.status(404).send('Patient not found.');
         }
     });
 });
 
-// Handle updating patient profile data
-app.post('/update-profile', (req, res) => {
-    if (!req.session.patientId) {
-        return res.status(403).send('Not authenticated');
-    }
 
+// Handle updating patient profile data
+app.post('/update-profile',authenticateToken, (req, res) => {
+    const patientId = req.user.id; // Get the patient's ID from the JWT
     const { firstName, lastName, phone, dateOfBirth, gender, address } = req.body;
-    const patientId = req.session.patientId;
 
     // Log the incoming data for debugging
     console.log('Request body:', req.body);
@@ -277,7 +298,7 @@ app.post('/update-profile', (req, res) => {
 
 //-----------------------------------------------------------Serve patient.html page--------------------------------------
 app.get('/patient', (req, res) => {
-    if (!req.session.patientId && !req.session.adminId) {  // Check for either patientId or adminId
+    if (!req.session.adminId) {  // Check for either patientId or adminId
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
 
@@ -293,7 +314,22 @@ app.get('/patient', (req, res) => {
 });
 
 // Fetch all patients
-app.get('/fetch-patients', (req, res) => {
+app.get('/fetch-patients', authenticateToken,(req, res) => {
+    const patientId = req.user.id; // Assuming the patient's ID is stored in the JWT payload.
+    const role = req.user.role;    // Assuming role (admin or undefined for patient) is stored in the JWT payload.
+
+    // Check if the user is a patient or admin based on the role
+    let userRole;
+    if (role && role === 'admin') {
+        userRole = 'admin';
+        console.log("Admin:",req.user.role)
+    } else if (patientId) {
+        userRole = 'patient';
+        console.log("Patient:",req.user.id)
+        return res.status(403).send('Forbidden'); // If neither role nor patientId is found, block access
+    } 
+
+
     const sql = 'SELECT id, first_name, last_name, email, phone, date_of_birth, gender, address FROM Patients';
     db.query(sql, (err, results) => {
         if (err) {
@@ -319,9 +355,10 @@ app.get('/fetch-patients', (req, res) => {
 // Endpoint to add a new doctor-------------------------------------DOCTOR-----------------------------------------
 // Serve doctor.html page
 app.get('/doctor', (req, res) => {
-    if (!req.session.patientId && !req.session.adminId) {
+    if (!req.session.patientId && !req.session.adminId) {  // Check for either patientId or adminId
         return res.redirect('/login'); // Redirect to login if not authenticated
     }
+
 
     // Determine user type based on session ID
     const userType = req.session.adminId ? 'admin' : 'patient';
@@ -343,9 +380,56 @@ app.get('/doctor', (req, res) => {
     });
 });
 
+// Fetch doctors
+app.get('/fetch-doctors', authenticateToken, (req, res) => {
+
+    const patientId = req.user.id; // Assuming the patient's ID is stored in the JWT payload.
+    const role = req.user.role;    // Assuming role (admin or undefined for patient) is stored in the JWT payload.
+
+    // Check if the user is a patient or admin based on the role
+    let userRole;
+    if (role && role === 'admin') {
+        userRole = 'admin';
+        console.log("Admin:",req.user.role)
+    } else if (patientId) {
+        userRole = 'patient';
+        console.log("Patient:",req.user.id)
+    } else {
+        return res.status(403).send('Forbidden'); // If neither role nor patientId is found, block access
+    }
+
+
+    const sql = 'SELECT id, first_name, last_name, specialization, email, phone, schedule FROM Doctors';
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).send('Error fetching doctors data.');
+        }
+
+        console.log('Fetched doctors data:', rows);
+
+        if (rows.length > 0) {
+            res.json(rows); // Send the array of doctors
+        } else {
+            res.status(404).send('No doctors found.');
+        }
+    });
+});
 
 //Add Doctor
-app.post('/add-doctor', (req, res) => {
+app.post('/add-doctor', authenticateToken,(req, res) => {
+
+    const role = req.user.role;    // Assuming role (admin or undefined for patient) is stored in the JWT payload.
+
+    // Check if the user is a patient or admin based on the role
+    let userRole;
+    if (role && role === 'admin') {
+        userRole = 'admin';
+    }
+     else {
+        return res.status(403).send('Forbidden'); // If neither role nor patientId is found, block access
+    }
+
     const { firstName, lastName, specialization, email, phone, schedule } = req.body;
 
     // Initialize an array to store validation errors
@@ -379,46 +463,34 @@ app.post('/add-doctor', (req, res) => {
     });
 });
 
-// Fetch doctors
-app.get('/fetch-doctors', (req, res) => {
-    const sql = 'SELECT id, first_name, last_name, specialization, email, phone, schedule FROM Doctors';
-
-    db.query(sql, (err, rows) => {
-        if (err) {
-            return res.status(500).send('Error fetching doctors data.');
-        }
-
-        console.log('Fetched doctors data:', rows);
-
-        if (rows.length > 0) {
-            res.json(rows); // Send the array of doctors
-        } else {
-            res.status(404).send('No doctors found.');
-        }
-    });
-});
-
 //update doctors
-app.put('/update-doctor/:id', (req, res) => {
-    const { id } = req.params;
-    const { firstName, lastName, specialization, email, phone, schedule } = req.body;
+app.put('/update-doctor/:id', authenticateToken, (req, res) => {
+    const userRole = req.user.role;    // Role is available if it's an admin
 
-    // SQL query to update the doctor record
-    const sql = `UPDATE Doctors SET first_name = ?, last_name = ?, specialization = ?, email = ?, phone = ?, schedule = ? WHERE id = ?`;
+    // Ensure that only admins can update doctors
+    if (userRole && userRole === 'admin') {
+        const { id } = req.params;
+        const { firstName, lastName, specialization, email, phone, schedule } = req.body;
 
-    db.query(sql, [firstName, lastName, specialization, email, phone, schedule, id], (err, result) => {
-        if (err) {
-            console.error('Error updating doctor:', err);
-            return res.status(500).json({ message: 'Error updating doctor.' });
-        }
+        const sql = `UPDATE Doctors SET first_name = ?, last_name = ?, specialization = ?, email = ?, phone = ?, schedule = ? WHERE id = ?`;
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Doctor not found.' });
-        }
+        db.query(sql, [firstName, lastName, specialization, email, phone, schedule, id], (err, result) => {
+            if (err) {
+                console.error('Error updating doctor:', err);
+                return res.status(500).json({ message: 'Error updating doctor.' });
+            }
 
-        res.status(200).json({ message: 'Doctor updated successfully!' });
-    });
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: 'Doctor not found.' });
+            }
+
+            res.status(200).json({ message: 'Doctor updated successfully!' });
+        });
+    } else {
+        return res.status(403).send('Forbidden: Only admins can update doctor data.');
+    }
 });
+
 
 
 
@@ -442,63 +514,34 @@ app.get('/appointment', (req, res) => {
     });
 });
 
+
 // Fetch all appointments
-app.get('/fetch-appointments', (req, res) => {
-    console.log('Patient ID:', req.session.patientId);
-    console.log('Admin ID:', req.session.adminId);
+app.get('/fetch-appointments', authenticateToken, (req, res) => {
+    const patientId = req.user.id; // Assuming the patient's ID is stored in the JWT payload as 'id'
+    const role = req.user.role;    // Assuming role (admin or undefined for patient) is stored in the JWT payload
 
-    const userId = req.session.patientId || req.session.adminId;
-
-    // Check if the user is a patient or an admin
-    if (req.session.patientId) {
-        // Fetch appointments for the patient with id
-        const query = `
-        SELECT 
-            appointments.id, 
-            appointments.patient_id, 
-            patients.first_name AS patient_firstname,
-            patients.last_name AS patient_lastname,
-            appointments.doctor_id,
-            doctors.first_name AS doctor_firstname, 
-            doctors.last_name AS doctor_lastname, 
-            appointments.appointment_date, 
-            appointments.appointment_time,
-            appointments.status
-        FROM 
-            appointments
-        JOIN 
-            patients ON appointments.patient_id = patients.id
-        JOIN 
-            doctors ON appointments.doctor_id = doctors.id
-        WHERE 
-            appointments.patient_id = ?`;
-            
-        db.query(query, [userId], (err, results) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ success: false, message: 'Database error' });
-            }
-            res.json(results);
-        });
-    } else if (req.session.adminId) {
+    // Check if the user is a patient or admin based on the token payload
+    if (role && role === 'admin') {
         // Fetch all appointments for admin
-        const sql = `SELECT 
-            appointments.id, 
-            appointments.patient_id, 
-            patients.first_name AS patient_firstname,
-            patients.last_name AS patient_lastname,
-            appointments.doctor_id,
-            doctors.first_name AS doctor_firstname, 
-            doctors.last_name AS doctor_lastname, 
-            appointments.appointment_date, 
-            appointments.appointment_time,
-            appointments.status
+        const sql = `
+            SELECT 
+                appointments.id, 
+                appointments.patient_id, 
+                patients.first_name AS patient_firstname,
+                patients.last_name AS patient_lastname,
+                appointments.doctor_id,
+                doctors.first_name AS doctor_firstname, 
+                doctors.last_name AS doctor_lastname, 
+                appointments.appointment_date, 
+                appointments.appointment_time,
+                appointments.status
             FROM 
                 appointments
             JOIN 
                 patients ON appointments.patient_id = patients.id
             JOIN 
-                doctors ON appointments.doctor_id = doctors.id;`;
+                doctors ON appointments.doctor_id = doctors.id;
+        `;
 
         db.query(sql, (err, results) => {
             if (err) {
@@ -507,11 +550,45 @@ app.get('/fetch-appointments', (req, res) => {
             }
             res.json(results);
         });
+
+    } else if (patientId) {
+        // Fetch appointments specific to the patient
+        const query = `
+            SELECT 
+                appointments.id, 
+                appointments.patient_id, 
+                patients.first_name AS patient_firstname,
+                patients.last_name AS patient_lastname,
+                appointments.doctor_id,
+                doctors.first_name AS doctor_firstname, 
+                doctors.last_name AS doctor_lastname, 
+                appointments.appointment_date, 
+                appointments.appointment_time,
+                appointments.status
+            FROM 
+                appointments
+            JOIN 
+                patients ON appointments.patient_id = patients.id
+            JOIN 
+                doctors ON appointments.doctor_id = doctors.id
+            WHERE 
+                appointments.patient_id = ?;
+        `;
+
+        db.query(query, [patientId], (err, results) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            res.json(results);
+        });
+
     } else {
-        // If no user is authenticated
-        res.status(401).json({ success: false, message: 'Unauthorized' });
+        // If neither role nor patientId is found, block access
+        res.status(403).json({ success: false, message: 'Forbidden' });
     }
 });
+
 
 
 
@@ -527,38 +604,49 @@ app.get('/get-appointment/:id', (req, res) => {
     });
 });
 
-//Create Appointment
-app.post('/create-appointment', (req, res) => {
+// Create Appointment
+app.post('/create-appointment', authenticateToken, (req, res) => {
+    const { role, id: patientId } = req.user; // Extract role and patientId from token payload
+
+    // Only allow patients (non-admin users) to create appointments
+    if (role === 'admin') {
+        return res.status(403).json({ success: false, message: 'Forbidden: Only patients can create appointments' });
+    }
+
     try {
-        const { patientId, doctorId, appointmentDate, appointmentTime, status } = req.body;
+        const { doctorId, appointmentDate, appointmentTime, status } = req.body;
 
         // Validate input data
-        if (!patientId || !doctorId || !appointmentDate || !appointmentTime || !status) {
+        if (!doctorId || !appointmentDate || !appointmentTime || !status) {
             return res.status(400).json({ success: false, message: 'Invalid request data' });
         }
 
-        // Check foreign key existence
-        db.query('SELECT id FROM Patients WHERE id = ?', patientId, (err, result) => {
-            if (err || result.length === 0) {
-                return res.status(400).json({ success: false, message: 'Invalid patient ID' });
+        // Check if the provided doctor ID exists
+        db.query('SELECT id FROM Doctors WHERE id = ?', [doctorId], (err, result) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            if (result.length === 0) {
+                return res.status(400).json({ success: false, message: 'Invalid doctor ID' });
             }
 
-            db.query('SELECT id FROM Doctors WHERE id = ?', doctorId, (err, result) => {
-                if (err || result.length === 0) {
-                    return res.status(400).json({ success: false, message: 'Invalid doctor ID' });
+            // Insert the new appointment
+            const sql = 'INSERT INTO Appointments SET ?';
+            const values = {
+                patient_id: patientId, // Use the patient's ID from the token
+                doctor_id: doctorId,
+                appointment_date: appointmentDate,
+                appointment_time: appointmentTime,
+                status
+            };
+
+            db.query(sql, values, (err, result) => {
+                if (err) {
+                    console.error('Database error:', err);
+                    return res.status(500).json({ success: false, message: 'Error creating appointment' });
                 }
-
-                // Database query
-                const sql = 'INSERT INTO Appointments SET ?';
-                const values = { patient_id: patientId, doctor_id: doctorId, appointment_date: appointmentDate, appointment_time: appointmentTime, status };
-
-                db.query(sql, values, (err, result) => {
-                    if (err) {
-                        console.error('Database error:', err);
-                        return res.status(500).json({ success: false, message: 'Error creating appointment' });
-                    }
-                    res.json({ success: true, message: 'Appointment created successfully' });
-                });
+                res.json({ success: true, message: 'Appointment created successfully' });
             });
         });
     } catch (error) {
@@ -567,20 +655,54 @@ app.post('/create-appointment', (req, res) => {
     }
 });
 
+
 // Update appointment by ID
-app.put('/update-appointment/:id', (req, res) => {
-    const { id } = req.params;
+// Update Appointment
+app.put('/update-appointment/:id', authenticateToken, (req, res) => {
+    const { id } = req.params; // Appointment ID from URL
+    const { role, id: userId } = req.user; // Extract role and user ID from token
     const { patientId, doctorId, appointmentDate, appointmentTime, status } = req.body;
+
+    // Define the query for updating the appointment
     const sql = 'UPDATE Appointments SET patient_id = ?, doctor_id = ?, appointment_date = ?, appointment_time = ?, status = ? WHERE id = ?';
     const values = [patientId, doctorId, appointmentDate, appointmentTime, status, id];
 
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            return res.status(500).json({ success: false, message: 'Error updating appointment' });
-        }
-        res.json({ success: true, message: 'Appointment updated successfully' });
-    });
+    // If the user is an admin, proceed with the update
+    if (role === 'admin') {
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ success: false, message: 'Error updating appointment' });
+            }
+            res.json({ success: true, message: 'Appointment updated successfully' });
+        });
+    } 
+    // If the user is a patient, ensure they are only updating their own appointments
+    else {
+        const checkPatientQuery = 'SELECT patient_id FROM Appointments WHERE id = ?';
+        
+        db.query(checkPatientQuery, [id], (err, results) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            
+            // Check if the patient is updating their own appointment
+            if (results.length > 0 && results[0].patient_id === userId) {
+                db.query(sql, values, (err, result) => {
+                    if (err) {
+                        console.error('Database error:', err);
+                        return res.status(500).json({ success: false, message: 'Error updating appointment' });
+                    }
+                    res.json({ success: true, message: 'Appointment updated successfully' });
+                });
+            } else {
+                res.status(403).json({ success: false, message: 'Forbidden: You can only update your own appointments' });
+            }
+        });
+    }
 });
+
 
 
 
@@ -590,6 +712,7 @@ app.put('/update-appointment/:id', (req, res) => {
 // Handle logout
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
+        res.clearCookie('sessionId'); // Clear any session cookies
         res.redirect('/login'); // Redirect to login page after logout
     });
 });
@@ -619,12 +742,15 @@ app.get('*', (req, res) => {
 
 
 
-// Listen on port 3000
+/* Listen on port 3000
 app.listen(3000, () => {
-    console.log('Server running on port 3000');
+    console.log('Server is running on https://localhost:3000/index');
+});*/
+
+// Start the HTTPS server
+https.createServer(sslOptions, app).listen(3000, () => {
+    console.log('HTTPS Server running at https://localhost:3000');
 });
-
-
 
 
 

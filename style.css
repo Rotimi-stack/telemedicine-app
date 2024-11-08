@@ -1,5 +1,5 @@
 header {
-    background:rgba(0, 0, 255, 0.772);
+    background:rgba(6, 6, 108, 0.772);
     color: #fff;
     padding: 21x;
     text-align: center;
@@ -169,7 +169,7 @@ nav ul li a:hover {
     width: 12%; 
     max-width: 500px; 
     text-align: center; 
-    background:rgba(0, 0, 255, 0.772); 
+    background:rgba(6, 6, 108, 0.772);/* Matches footer or slightly darker */
     padding: 2px; 
     border-radius: 5px;
     margin: 0 auto 20px auto; 
@@ -241,7 +241,7 @@ nav ul li a:hover {
     width: 20%; 
     max-width: 500px; 
     text-align: center; 
-    background:rgba(0, 0, 255, 0.772); 
+    background:rgba(6, 6, 108, 0.772);/* Matches footer or slightly darker */
     padding: 10px; 
     border-radius: 5px;
     margin: 0 auto 20px auto; /* Center and give space below */
@@ -367,7 +367,7 @@ nav ul li a:hover {
     padding: 0.8rem;
     border-radius: 8px;
     max-width: 800px;     
-    height: 843px;  
+    height: 600px;  
     margin: 0 auto;         
 }
 
@@ -392,8 +392,8 @@ nav ul li a:hover {
     padding: 0.75rem;               
     border: 1px solid #555;         
     border-radius: 4px;              
-    background-color: #908787;          
-    color: #f1e4e4;                   
+    background-color: white;          
+    color: black;                   
     box-sizing: border-box;  
 }
 
@@ -401,7 +401,7 @@ nav ul li a:hover {
 #contact form textarea {
     height: 150px;                  
     resize: vertical;   
-    background-color: #888888;          
+    background-color: white;          
 }
 
 /* Button Styling */
@@ -504,11 +504,89 @@ ul {
 }
 
 footer {
-    text-align: center;
-    padding: 1rem;
-    background:rgba(0, 0, 255, 0.772);
+    background:rgba(6, 6, 108, 0.772);/* Matches footer or slightly darker */
     color: #fff;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    width: 20%;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #f1f1f1;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer-section p {
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.icon {
+    color: #ccc;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.icon:hover {
+    color: #fff;
+}
+
+/* Style for the footer bottom section */
+.footer-bottom {
+    background:rgba(6, 6, 108, 0.772);/* Matches footer or slightly darker */
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-bottom p, .footer-bottom .social-links {
+    margin: 5px 0;
+}
+
+.footer-bottom .social-links a {
+    color: #ccc;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-bottom .social-links a:hover {
+    color: #fff;
+    text-decoration: underline;
 }

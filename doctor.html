@@ -21,13 +21,11 @@
         <header>
             <!-- Social Media Icons Container -->
             <div class="media-icons">
-                <h2><a href="javascript:void(0);" id="homeLink" onclick="redirectToTelemedicine()">Telemedicine</a></h2>
+                <h2><a id="telemedicine-link" href="/admin.html">Telemedicine</a> </h2>
             </div>
             <nav>
                 <ul>
-                    <li><a href="javascript:void(0);" onclick="redirectToTelemedicine()">Telemedicine</a></li>
-
-
+                    <li><a href="/admin.html" id="telemedicine-link-nav">Telemedicine</a>
                     <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>
@@ -162,7 +160,7 @@
         </section>
     </div>
     <!-- Footer -->
-    <footer class="text-center mt-4">
+    <div class="footer-bottom">
         <p>&copy; 2024 Telemedicine App. All rights reserved.</p>
         <div class="social-links">
             <a href="#" target="_blank">Facebook</a>
@@ -170,7 +168,10 @@
             <a href="#" target="_blank">LinkedIn</a>
         </div>
         <p>Contact us at <a href="mailto:info@telemedicineapp.com">info@telemedicineapp.com</a></p>
-    </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="doctor.js"></script> <!-- Link to external JavaScript file -->
 </body>
 
