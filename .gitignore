@@ -1,0 +1,12 @@
+.env
+
+
+# SSL certificates and private key
+server.cert
+server.key
+
+notepad.txt
+servernotepad.txt
+patientjsnotepad.txt
+patienthtmlnotepad.txt
+loginnotepad.txt

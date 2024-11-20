@@ -23,20 +23,14 @@ app.use(cors());
 // Middleware to serve static files (like CSS, JS)
 app.use(express.static(__dirname));
 
+//#region SESSION MANAGEMENT
 // Set up session management
 app.use(session({
-    secret: 'your-secret-key', // Replace with a strong secret key
+    secret: process.env.SESSION_SECRET, // Replace with a strong secret key
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true } // Set to true if using HTTPS
 }));
-app.use(express.json()); // For parsing application/json
-
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'victortelemedapp07#'; // Replace with a strong secret key
-
-
-
 
 // Check user session
 app.get('/check-session', (req, res) => {
@@ -49,6 +43,15 @@ app.get('/check-session', (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' }); // User not logged in
     }
 });
+//#endregion
+
+
+app.use(express.json()); // For parsing application/json
+
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.JWT_SECRET; // Replace with a strong secret key
+
+
 
 // Body parser middleware to parse form data from POST requests
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -57,8 +60,8 @@ app.use(bodyParser.json());
 
 // Define the paths for the certificate and key files
 const sslOptions = {
-    key: fs.readFileSync(path.join(__dirname, 'server.key')), // Path to server.key
-    cert: fs.readFileSync(path.join(__dirname, 'server.cert'))  // Path to server.crt
+    key: fs.readFileSync(path.join(__dirname, process.env.SSL_KEY_PATH)), // Path to server.key
+    cert: fs.readFileSync(path.join(__dirname, process.env.SSL_CERT_PATH))  // Path to server.crt
 };
 
 
@@ -99,7 +102,7 @@ app.get('/index', (req, res) => {
             res.end(data); // Send index.html content
         }
     });
-});
+})
 
 
 
